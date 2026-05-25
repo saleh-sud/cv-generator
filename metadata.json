@@ -1,0 +1,6 @@
+{
+  "name": "أدوات الوظائف - JobTools",
+  "description": "منصة مجانية شاملة لإنشاء السير الذاتية باللغتين العربية والإنجليزية وتوليد الوصف الوظيفي لجميع المهن احترافيًا مع صفحات مهيأة لمحركات البحث.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
