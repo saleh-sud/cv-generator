@@ -9,105 +9,27 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Tools -->
+  <!-- Main Tools -->
   <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/tools/cv-generator-ar</loc>
+    <loc>https://bright-beignet-44952a.netlify.app</loc>
     <lastmod>2026-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/tools/cv-generator-en</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/tools/job-description-generator</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- CV Pages -->
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/cv/accountant-cv-ar</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/cv/hr-cv-ar</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/cv/admin-assistant-cv-ar</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/cv/teacher-cv-ar</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/cv/fresh-graduate-cv-ar</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/cv/engineer-cv-ar</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Job Description Pages -->
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/job-description/hr-officer</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/job-description/accountant</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/job-description/admin-assistant</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/job-description/data-entry</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
 
   <!-- Blog -->
   <url>
-    <loc>https://bright-beignet-44952a.netlify.app/#/blog</loc>
+    <loc>https://bright-beignet-44952a.netlify.app</loc>
     <lastmod>2026-05-24</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- SEO Landing -->
+  <url>
+    <loc>https://bright-beignet-44952a.netlify.app</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
