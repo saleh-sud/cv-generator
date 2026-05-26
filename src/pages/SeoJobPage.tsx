@@ -35,7 +35,7 @@ export default function SeoJobPage({ slug, isRtl, onNavigate, onLoadJobDataToBui
         <h2 className="text-2xl font-bold text-slate-800">العنصر غير موجود - Page Not Found</h2>
         <p className="text-slate-500 text-sm mt-2">تعذر العثور على بطاقة الوصف الوظيفي المطلوبة.</p>
         <button 
-          onClick={() => onNavigate("#/")}
+          onClick={() => onNavigate("/")}
           className="mt-6 px-4 py-2 bg-emerald-600 text-white font-medium rounded-lg text-sm cursor-pointer"
         >
           العودة للرئيسية
@@ -91,7 +91,7 @@ ${skills.join(" - ")}
     };
 
     onLoadJobDataToBuilder(dataToSeed);
-    onNavigate("#/tools/job-description-generator");
+    onNavigate("/tools/job-description-generator");
   };
 
   return (
@@ -99,7 +99,7 @@ ${skills.join(" - ")}
       
       {/* Breadcrumb breading paths */}
       <nav className="mb-6 flex items-center gap-1.5 text-xs text-slate-500 font-medium select-none">
-        <button onClick={() => onNavigate("#/")} className="hover:text-sky-600 cursor-pointer">
+        <button onClick={() => onNavigate("/")} className="hover:text-sky-600 cursor-pointer">
           {isRtl ? "الرئيسية" : "Home"}
         </button>
         <span>/</span>

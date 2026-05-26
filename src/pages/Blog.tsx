@@ -121,7 +121,7 @@ export default function Blog({
       >
 
         <button
-          onClick={() => onNavigate("#/blog")}
+          onClick={() => onNavigate("/blog")}
           className="inline-flex items-center gap-1 text-xs font-bold text-sky-600 hover:text-sky-700 bg-sky-50 px-3 py-1.5 rounded-lg mb-6 cursor-pointer"
         >
           {isRtl ? (
@@ -248,11 +248,11 @@ export default function Blog({
                 <h3 className="font-extrabold text-slate-800 text-base mb-2">
 
                   <a
-                    href={"#/blog/" + article.slug}
+                    href={"/blog/" + article.slug}
                     onClick={(e) => {
                       e.preventDefault();
                       onNavigate(
-                        "#/blog/" + article.slug
+                        "/blog/" + article.slug
                       );
                     }}
                   >
@@ -282,7 +282,7 @@ export default function Blog({
                 <button
                   onClick={() =>
                     onNavigate(
-                      "#/blog/" + article.slug
+                      "/blog/" + article.slug
                     )
                   }
                   className="flex items-center gap-1 hover:underline cursor-pointer"

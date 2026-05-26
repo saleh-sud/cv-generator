@@ -708,5 +708,953 @@ They provide thousands of opportunities across industries.
 
 Applying through multiple websites increases your chances.
   `
+},
+{
+  id: "12",
+
+  title: "كيف تجعل سيرتك الذاتية مقبولة لدى الشركات العالمية؟",
+
+  titleEn: "How to Make Your Resume Accepted by International Companies",
+
+  slug: "international-resume-tips",
+
+  summary:
+    "تعرف على أهم الخطوات التي تساعدك على كتابة سيرة ذاتية احترافية تناسب الشركات العالمية.",
+
+  summaryEn:
+    "Learn how to create a professional resume suitable for international companies and remote jobs.",
+
+  category: "السيرة الذاتية",
+  categoryEn: "Resume Tips",
+
+  readTime: "6 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+العمل مع الشركات العالمية يحتاج إلى سيرة ذاتية احترافية وواضحة.
+
+ركز على:
+- اللغة الإنجليزية الصحيحة
+- استخدام تنسيق ATS
+- إضافة إنجازات حقيقية
+- كتابة ملخص مهني قوي
+
+يفضل أيضًا استخدام كلمات مفتاحية مرتبطة بالوظيفة المطلوبة.
+
+لا تستخدم صورًا أو تصميمات معقدة لأن أغلب الشركات تعتمد على أنظمة ATS.
+
+حاول أن تكون السيرة الذاتية مختصرة وواضحة وسهلة القراءة.
+  `,
+
+  contentEn: `
+International companies prefer clean and ATS-friendly resumes.
+
+Focus on:
+- proper English
+- ATS formatting
+- real achievements
+- strong professional summary
+
+Use job-related keywords naturally.
+
+Avoid heavy designs or unnecessary graphics.
+
+Keep your resume concise and easy to read.
+  `
+},
+{
+  id: "13",
+
+  title: "أفضل طريقة لكتابة المهارات في السيرة الذاتية",
+
+  titleEn: "Best Way to Write Skills on Your Resume",
+
+  slug: "resume-skills-guide",
+
+  summary:
+    "تعرف على الطريقة الصحيحة لعرض المهارات التقنية والشخصية داخل السيرة الذاتية.",
+
+  summaryEn:
+    "Learn how to present technical and soft skills professionally in your CV.",
+
+  category: "المهارات",
+  categoryEn: "Skills",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+قسم المهارات من أهم أقسام السيرة الذاتية.
+
+يجب تقسيم المهارات إلى:
+- مهارات تقنية
+- مهارات شخصية
+
+أمثلة على المهارات التقنية:
+- Excel
+- إدارة المشاريع
+- كتابة التقارير
+
+أمثلة على المهارات الشخصية:
+- التواصل
+- حل المشكلات
+- العمل الجماعي
+
+لا تضف مهارات لا تمتلكها فعليًا.
+  `,
+
+  contentEn: `
+The skills section is one of the most important parts of a resume.
+
+Divide skills into:
+- technical skills
+- soft skills
+
+Technical skills examples:
+- Excel
+- Project management
+- Reporting
+
+Soft skills examples:
+- Communication
+- Problem solving
+- Teamwork
+
+Never list skills you do not actually have.
+  `
+},
+{
+  id: "14",
+
+  title: "كيف تزيد فرص قبولك في الوظائف عن بعد؟",
+
+  titleEn: "How to Increase Your Chances in Remote Jobs",
+
+  slug: "remote-job-success",
+
+  summary:
+    "تعرف على أهم النصائح التي تساعدك بالحصول على وظائف Remote والعمل مع شركات خارجية.",
+
+  summaryEn:
+    "Discover practical tips to improve your chances of getting remote jobs.",
+
+  category: "العمل عن بعد",
+  categoryEn: "Remote Work",
+
+  readTime: "6 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+العمل عن بعد أصبح من أكثر أنواع الوظائف انتشارًا.
+
+لزيادة فرصك:
+- حسن حساب LinkedIn
+- استخدم سيرة ذاتية احترافية
+- تعلم التواصل باللغة الإنجليزية
+- أضف مشاريع حقيقية
+
+الشركات الخارجية تهتم كثيرًا بالمهارات العملية أكثر من الشهادات أحيانًا.
+
+حاول بناء معرض أعمال أو موقع شخصي لعرض خبراتك.
+  `,
+
+  contentEn: `
+Remote work opportunities continue to grow worldwide.
+
+To improve your chances:
+- optimize LinkedIn
+- use a professional resume
+- improve English communication
+- showcase real projects
+
+Many international companies value practical skills highly.
+
+Build a portfolio or personal website to demonstrate your experience.
+  `
+},
+{
+  id: "15",
+
+  title: "أفضل الكلمات المفتاحية للسيرة الذاتية",
+
+  titleEn: "Best Resume Keywords for ATS Systems",
+
+  slug: "best-resume-keywords",
+
+  summary:
+    "تعرف على أهمية الكلمات المفتاحية داخل السيرة الذاتية وكيف تساعدك على تجاوز أنظمة ATS.",
+
+  summaryEn:
+    "Learn how resume keywords improve ATS performance and job application success.",
+
+  category: "ATS",
+  categoryEn: "ATS",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+الكلمات المفتاحية تساعد أنظمة ATS على فهم تخصصك وخبراتك.
+
+يفضل استخدام كلمات مأخوذة من الإعلان الوظيفي نفسه.
+
+أمثلة:
+- Human Resources
+- Data Entry
+- Recruitment
+- Project Management
+
+لا تكرر الكلمات بشكل مزعج.
+
+استخدم الكلمات المفتاحية بطريقة طبيعية داخل الخبرات والمهارات.
+  `,
+
+  contentEn: `
+Keywords help ATS systems understand your expertise.
+
+Use keywords directly from job descriptions.
+
+Examples:
+- Human Resources
+- Data Entry
+- Recruitment
+- Project Management
+
+Avoid keyword stuffing.
+
+Use keywords naturally throughout the resume.
+  `
+},
+{
+  id: "16",
+
+  title: "كيف تكتب ملخصًا احترافيًا في السيرة الذاتية؟",
+
+  titleEn: "How to Write a Professional Resume Summary",
+
+  slug: "professional-resume-summary",
+
+  summary:
+    "تعرف على الطريقة الصحيحة لكتابة Professional Summary يجذب مسؤولي التوظيف.",
+
+  summaryEn:
+    "Learn how to write a strong professional summary for your resume.",
+
+  category: "السيرة الذاتية",
+  categoryEn: "Resume",
+
+  readTime: "4 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+الملخص المهني هو أول جزء يقرأه مسؤول التوظيف.
+
+يجب أن يكون:
+- مختصرًا
+- واضحًا
+- احترافيًا
+
+اشرح:
+- تخصصك
+- سنوات الخبرة
+- أهم مهاراتك
+- هدفك المهني
+
+تجنب كتابة جمل طويلة جدًا أو معلومات عامة.
+  `,
+
+  contentEn: `
+The professional summary is the first thing recruiters read.
+
+It should be:
+- concise
+- clear
+- professional
+
+Mention:
+- your specialization
+- years of experience
+- key skills
+- career goals
+
+Avoid long generic paragraphs.
+  `
+},
+{
+  id: "17",
+
+  title: "أفضل مواقع إنشاء السيرة الذاتية مجانًا",
+
+  titleEn: "Best Free Resume Builders",
+
+  slug: "best-free-resume-builders",
+
+  summary:
+    "اكتشف أفضل الأدوات المجانية لإنشاء سير ذاتية احترافية بسهولة.",
+
+  summaryEn:
+    "Explore the best free resume builders for creating professional resumes quickly.",
+
+  category: "أدوات",
+  categoryEn: "Tools",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+هناك العديد من الأدوات المجانية لإنشاء السير الذاتية.
+
+من أهم المميزات التي يجب البحث عنها:
+- توافق ATS
+- سهولة التعديل
+- تصدير PDF
+- قوالب حديثة
+
+اختر أداة بسيطة وسريعة بدل الأدوات المعقدة.
+  `,
+
+  contentEn: `
+Many free resume tools are available online.
+
+Look for:
+- ATS compatibility
+- easy editing
+- PDF export
+- modern templates
+
+Choose clean and simple tools.
+  `
+},
+{
+  id: "18",
+
+  title: "كيف تكتب خبرات العمل بشكل احترافي؟",
+
+  titleEn: "How to Write Work Experience Professionally",
+
+  slug: "professional-work-experience",
+
+  summary:
+    "تعرف على أفضل طريقة لعرض خبرات العمل داخل السيرة الذاتية.",
+
+  summaryEn:
+    "Learn the best practices for presenting work experience on your resume.",
+
+  category: "الخبرات",
+  categoryEn: "Experience",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+قسم الخبرات هو أهم قسم داخل السيرة الذاتية.
+
+ركز على:
+- الإنجازات
+- المسؤوليات
+- النتائج
+
+استخدم أفعال قوية مثل:
+- أدرت
+- طورت
+- نسقت
+- حسنت
+
+حاول استخدام أرقام حقيقية لإظهار تأثير عملك.
+  `,
+
+  contentEn: `
+The work experience section is extremely important.
+
+Focus on:
+- achievements
+- responsibilities
+- measurable results
+
+Use strong action verbs such as:
+- managed
+- developed
+- coordinated
+- improved
+
+Use numbers whenever possible.
+  `
+},
+{
+  id: "19",
+
+  title: "كيف تجهز نفسك لأول مقابلة عمل؟",
+
+  titleEn: "How to Prepare for Your First Job Interview",
+
+  slug: "first-job-interview-guide",
+
+  summary:
+    "تعرف على أهم النصائح التي تساعدك على النجاح في أول مقابلة عمل.",
+
+  summaryEn:
+    "Discover essential tips for succeeding in your first job interview.",
+
+  category: "المقابلات",
+  categoryEn: "Interviews",
+
+  readTime: "6 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+التحضير الجيد يزيد فرص النجاح في المقابلات.
+
+قبل المقابلة:
+- اقرأ عن الشركة
+- راجع سيرتك الذاتية
+- حضر إجابات للأسئلة الشائعة
+
+أثناء المقابلة:
+- تحدث بثقة
+- كن هادئًا
+- لا تقاطع المحاور
+
+المظهر الاحترافي مهم أيضًا.
+  `,
+
+  contentEn: `
+Preparation increases interview success rates.
+
+Before the interview:
+- research the company
+- review your resume
+- prepare common answers
+
+During the interview:
+- speak confidently
+- stay calm
+- avoid interruptions
+
+Professional appearance also matters.
+  `
+},
+{
+  id: "20",
+
+  title: "أفضل تنسيق PDF للسيرة الذاتية",
+
+  titleEn: "Best PDF Format for Resumes",
+
+  slug: "best-resume-pdf-format",
+
+  summary:
+    "تعرف على أفضل إعدادات PDF لتصدير السيرة الذاتية بشكل احترافي.",
+
+  summaryEn:
+    "Learn the best PDF settings for exporting professional resumes.",
+
+  category: "PDF",
+  categoryEn: "PDF",
+
+  readTime: "4 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+يفضل إرسال السيرة الذاتية بصيغة PDF.
+
+تأكد من:
+- وضوح الخطوط
+- حجم الملف المناسب
+- إمكانية نسخ النص
+- عدم تلف التنسيق
+
+تجنب الصور الثقيلة داخل الملف.
+  `,
+
+  contentEn: `
+PDF is the preferred resume format.
+
+Make sure:
+- fonts are clear
+- file size is optimized
+- text is selectable
+- formatting is preserved
+
+Avoid heavy graphics.
+  `
+},
+{
+  id: "21",
+
+  title: "كيف تنشئ حساب LinkedIn احترافي؟",
+
+  titleEn: "How to Create a Professional LinkedIn Profile",
+
+  slug: "professional-linkedin-profile",
+
+  summary:
+    "تعرف على أفضل الطرق لتحسين حساب LinkedIn وزيادة فرص التوظيف.",
+
+  summaryEn:
+    "Learn how to optimize your LinkedIn profile for better career opportunities.",
+
+  category: "LinkedIn",
+  categoryEn: "LinkedIn",
+
+  readTime: "6 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+حساب LinkedIn أصبح ضروريًا للوظائف الحديثة.
+
+يجب أن يحتوي على:
+- صورة احترافية
+- عنوان وظيفي واضح
+- نبذة مختصرة قوية
+- خبرات محدثة
+
+حاول نشر محتوى مهني بشكل مستمر.
+  `,
+
+  contentEn: `
+LinkedIn is essential for modern careers.
+
+Your profile should include:
+- professional photo
+- clear headline
+- strong summary
+- updated experience
+
+Try sharing professional content regularly.
+  `
+},
+{
+  id: "22",
+
+  title: "أخطاء شائعة تؤدي لرفض السيرة الذاتية",
+
+  titleEn: "Common Resume Mistakes That Cause Rejection",
+
+  slug: "resume-mistakes",
+
+  summary:
+    "تعرف على أكثر الأخطاء التي تجعل الشركات ترفض السير الذاتية بسرعة.",
+
+  summaryEn:
+    "Learn about common resume mistakes recruiters dislike.",
+
+  category: "السيرة الذاتية",
+  categoryEn: "Resume",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+هناك أخطاء بسيطة قد تؤدي لرفض السيرة الذاتية مباشرة.
+
+من أهمها:
+- الأخطاء الإملائية
+- تصميم معقد
+- معلومات غير صحيحة
+- طول زائد
+
+احرص على مراجعة السيرة الذاتية قبل إرسالها.
+  `,
+
+  contentEn: `
+Simple mistakes can lead to immediate rejection.
+
+Common mistakes include:
+- spelling errors
+- complicated design
+- inaccurate information
+- excessive length
+
+Always review your resume carefully.
+  `
+},
+{
+  id: "23",
+
+  title: "كيف تختار الكلمات المناسبة في الوصف الوظيفي؟",
+
+  titleEn: "How to Choose Effective Job Description Keywords",
+
+  slug: "job-description-keywords",
+
+  summary:
+    "تعرف على الكلمات المفتاحية المهمة داخل الأوصاف الوظيفية.",
+
+  summaryEn:
+    "Learn how to use strong keywords in job descriptions.",
+
+  category: "الوصف الوظيفي",
+  categoryEn: "Job Description",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+الوصف الوظيفي الجيد يجب أن يكون واضحًا ودقيقًا.
+
+استخدم كلمات مثل:
+- إدارة
+- تنسيق
+- تحليل
+- تخطيط
+
+وصف الوظيفة الجيد يساعد على جذب المرشحين المناسبين.
+  `,
+
+  contentEn: `
+A strong job description should be clear and precise.
+
+Use keywords such as:
+- management
+- coordination
+- analysis
+- planning
+
+Good job descriptions attract better candidates.
+  `
+},
+{
+  id: "24",
+
+  title: "ما الفرق بين السيرة الذاتية والـ Resume؟",
+
+  titleEn: "Difference Between CV and Resume",
+
+  slug: "cv-vs-resume",
+
+  summary:
+    "تعرف على الفرق بين CV و Resume ومتى تستخدم كل منهما.",
+
+  summaryEn:
+    "Understand the differences between a CV and a resume.",
+
+  category: "السيرة الذاتية",
+  categoryEn: "Resume",
+
+  readTime: "4 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+الكثير يخلط بين CV و Resume.
+
+الـ CV:
+- أطول
+- أكثر تفصيلًا
+- يستخدم أكاديميًا غالبًا
+
+أما الـ Resume:
+- مختصر
+- سريع
+- مناسب لمعظم الوظائف
+
+اختر النوع المناسب حسب الوظيفة المطلوبة.
+  `,
+
+  contentEn: `
+Many people confuse CVs and resumes.
+
+A CV is:
+- longer
+- more detailed
+- often academic
+
+A resume is:
+- shorter
+- concise
+- common for jobs
+
+Choose based on job requirements.
+  `
+},
+{
+  id: "25",
+
+  title: "أفضل المهارات المطلوبة في 2026",
+
+  titleEn: "Top Skills in Demand for 2026",
+
+  slug: "top-skills-2026",
+
+  summary:
+    "اكتشف أكثر المهارات المطلوبة في سوق العمل خلال عام 2026.",
+
+  summaryEn:
+    "Discover the most in-demand job skills for 2026.",
+
+  category: "المهارات",
+  categoryEn: "Skills",
+
+  readTime: "6 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+سوق العمل يتغير بسرعة.
+
+من أهم المهارات المطلوبة:
+- الذكاء الاصطناعي
+- تحليل البيانات
+- التواصل
+- إدارة المشاريع
+- التسويق الرقمي
+
+تعلم المهارات الحديثة يزيد فرص التوظيف.
+  `,
+
+  contentEn: `
+The job market changes rapidly.
+
+Top skills include:
+- AI
+- data analysis
+- communication
+- project management
+- digital marketing
+
+Modern skills improve career opportunities.
+  `
+},
+{
+  id: "26",
+
+  title: "كيف تجعل سيرتك الذاتية مناسبة لأنظمة ATS؟",
+
+  titleEn: "How to Make Your Resume ATS Friendly",
+
+  slug: "ats-friendly-resume-guide",
+
+  summary:
+    "تعرف على أهم الخطوات لجعل سيرتك الذاتية متوافقة مع أنظمة ATS.",
+
+  summaryEn:
+    "Learn how to optimize your resume for ATS systems.",
+
+  category: "ATS",
+  categoryEn: "ATS",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+أنظمة ATS تقوم بفلترة السير الذاتية قبل وصولها للموظف.
+
+لتحسين التوافق:
+- استخدم تنسيق بسيط
+- تجنب الجداول المعقدة
+- استخدم كلمات مفتاحية
+- أرسل الملف بصيغة PDF
+
+كلما كانت السيرة أوضح زادت فرصة قبولها.
+  `,
+
+  contentEn: `
+ATS systems filter resumes automatically.
+
+To improve compatibility:
+- use simple formatting
+- avoid complex tables
+- include keywords
+- export as PDF
+
+Cleaner resumes perform better.
+  `
+},
+{
+  id: "27",
+
+  title: "أفضل طرق البحث عن عمل عبر الإنترنت",
+
+  titleEn: "Best Ways to Search for Jobs Online",
+
+  slug: "online-job-search-tips",
+
+  summary:
+    "تعرف على الطرق الأكثر فعالية للعثور على وظائف عبر الإنترنت.",
+
+  summaryEn:
+    "Discover the most effective online job search strategies.",
+
+  category: "التوظيف",
+  categoryEn: "Careers",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+البحث الذكي عن الوظائف يوفر الكثير من الوقت.
+
+يفضل:
+- متابعة LinkedIn
+- استخدام مواقع التوظيف
+- تحسين السيرة الذاتية
+- إرسال طلبات بشكل منتظم
+
+لا تعتمد على موقع واحد فقط.
+  `,
+
+  contentEn: `
+Smart job searching saves time and effort.
+
+Recommended steps:
+- follow LinkedIn
+- use job boards
+- optimize your resume
+- apply consistently
+
+Do not rely on one platform only.
+  `
+},
+{
+  id: "28",
+
+  title: "كيف تنشئ سيرة ذاتية بدون خبرة؟",
+
+  titleEn: "How to Create a Resume Without Experience",
+
+  slug: "resume-without-experience",
+
+  summary:
+    "تعرف على أفضل الطرق لكتابة سيرة ذاتية قوية حتى بدون خبرة عملية.",
+
+  summaryEn:
+    "Learn how to create a strong resume even without work experience.",
+
+  category: "الخريجين",
+  categoryEn: "Fresh Graduates",
+
+  readTime: "6 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+عدم وجود خبرة لا يعني عدم إمكانية الحصول على وظيفة.
+
+يمكن التركيز على:
+- المهارات
+- الدورات
+- المشاريع
+- التطوع
+
+اكتب أهدافك المهنية بشكل واضح واحترافي.
+  `,
+
+  contentEn: `
+Lack of experience does not prevent career opportunities.
+
+Focus on:
+- skills
+- courses
+- projects
+- volunteering
+
+Write clear career objectives.
+  `
+},
+{
+  id: "29",
+
+  title: "أهمية الكلمات المفتاحية في LinkedIn",
+
+  titleEn: "Importance of Keywords on LinkedIn",
+
+  slug: "linkedin-keywords",
+
+  summary:
+    "تعرف على كيف تساعد الكلمات المفتاحية في زيادة ظهور حسابك على LinkedIn.",
+
+  summaryEn:
+    "Learn how LinkedIn keywords improve profile visibility.",
+
+  category: "LinkedIn",
+  categoryEn: "LinkedIn",
+
+  readTime: "4 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+الكلمات المفتاحية تساعد أصحاب العمل على إيجاد حسابك بسهولة.
+
+استخدم كلمات مرتبطة بتخصصك داخل:
+- العنوان
+- الملخص
+- الخبرات
+- المهارات
+
+حاول تحديث حسابك باستمرار.
+  `,
+
+  contentEn: `
+Keywords help recruiters discover your profile.
+
+Use keywords in:
+- headline
+- summary
+- experience
+- skills
+
+Keep your profile updated regularly.
+  `
+},
+{
+  id: "30",
+
+  title: "كيف تزيد فرص قبولك في الشركات الأجنبية؟",
+
+  titleEn: "How to Increase Acceptance in International Companies",
+
+  slug: "international-company-tips",
+
+  summary:
+    "تعرف على أهم النصائح للحصول على فرص عمل مع شركات عالمية.",
+
+  summaryEn:
+    "Learn practical tips for getting hired by international companies.",
+
+  category: "الوظائف العالمية",
+  categoryEn: "International Careers",
+
+  readTime: "6 دقائق",
+
+  date: "2026-05-25",
+
+  content: `
+الشركات الأجنبية تهتم بالاحترافية والمهارات العملية.
+
+لزيادة فرصك:
+- حسن اللغة الإنجليزية
+- استخدم LinkedIn
+- أنشئ Portfolio
+- طور مهارات التواصل
+
+الخبرة العملية والمشاريع الحقيقية مهمة جدًا.
+  `,
+
+  contentEn: `
+International companies value professionalism and practical skills.
+
+Improve your chances by:
+- improving English
+- using LinkedIn
+- building a portfolio
+- developing communication skills
+
+Real projects matter greatly.
+  `
 }
 ];

@@ -15,31 +15,31 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
     {
       labelAr: "الرئيسية",
       labelEn: "Home",
-      route: "#/",
+      route: "/",
       icon: null
     },
     {
       labelAr: "إنشاء CV عربي",
       labelEn: "Arabic CV Builder",
-      route: "#/tools/cv-generator-ar",
+      route: "/tools/cv-generator-ar",
       icon: FileText
     },
     {
       labelAr: "Create English CV",
       labelEn: "English CV Builder",
-      route: "#/tools/cv-generator-en",
+      route: "/tools/cv-generator-en",
       icon: FileText
     },
     {
       labelAr: "وصف وظيفي",
       labelEn: "Job Spec Builder",
-      route: "#/tools/job-description-generator",
+      route: "/tools/job-description-generator",
       icon: Briefcase
     },
     {
       labelAr: "المقالات",
       labelEn: "Resources Blog",
-      route: "#/blog",
+      route: "/blog",
       icon: BookOpen
     }
   ];
@@ -56,7 +56,7 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
           {/* Logo Brand Section */}
           <div className="flex items-center gap-3">
             <button 
-              onClick={() => handleItemClick("#/")}
+              onClick={() => handleItemClick("/")}
               className="flex items-center gap-2 text-blue-600 font-bold text-lg md:text-xl tracking-tight cursor-pointer"
             >
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xs font-black font-mono">

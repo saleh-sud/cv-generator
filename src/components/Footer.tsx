@@ -47,8 +47,8 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               {SEO_CV_TEMPLATES.map((item) => (
                 <li key={item.slug}>
                   <a
-                    href={`#/cv/${item.slug}`}
-                    onClick={(e) => handleLinkClick(e, `#/cv/${item.slug}`)}
+                    href={`/cv/${item.slug}`}
+                    onClick={(e) => handleLinkClick(e, `/cv/${item.slug}`)}
                     className="hover:text-sky-400 transition-colors block text-right md:text-start"
                   >
                     {isRtl ? item.titleAr : item.titleEn}
@@ -68,8 +68,8 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               {SEO_JOB_TEMPLATES.map((item) => (
                 <li key={item.slug}>
                   <a
-                    href={`#/job-description/${item.slug}`}
-                    onClick={(e) => handleLinkClick(e, `#/job-description/${item.slug}`)}
+                    href={`/job-description/${item.slug}`}
+                    onClick={(e) => handleLinkClick(e, `/job-description/${item.slug}`)}
                     className="hover:text-emerald-400 transition-colors block text-right md:text-start"
                   >
                     💼 {isRtl ? `وصف وظيفي ${item.titleAr}` : `${item.titleEn} Job Description`}
@@ -88,8 +88,8 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="#/about"
-                  onClick={(e) => handleLinkClick(e, "#/about")}
+                  href="/about"
+                  onClick={(e) => handleLinkClick(e, "/about")}
                   className="hover:text-sky-400 transition-colors block text-right md:text-start"
                 >
                   ℹ️ {isRtl ? "عن المنصة" : "About Us"}
@@ -97,8 +97,8 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="#/contact"
-                  onClick={(e) => handleLinkClick(e, "#/contact")}
+                  href="/contact"
+                  onClick={(e) => handleLinkClick(e, "/contact")}
                   className="hover:text-sky-400 transition-colors block text-right md:text-start"
                 >
                   📧 {isRtl ? "اتصل بنا" : "Contact Support"}
@@ -106,8 +106,8 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="#/privacy-policy"
-                  onClick={(e) => handleLinkClick(e, "#/privacy-policy")}
+                  href="/privacy-policy"
+                  onClick={(e) => handleLinkClick(e, "/privacy-policy")}
                   className="hover:text-sky-400 transition-colors block text-right md:text-start"
                 >
                   🔒 {isRtl ? "سياسة الخصوصية والأمان" : "Privacy Policy"}
@@ -115,8 +115,8 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="#/terms"
-                  onClick={(e) => handleLinkClick(e, "#/terms")}
+                  href="/terms"
+                  onClick={(e) => handleLinkClick(e, "/terms")}
                   className="hover:text-sky-400 transition-colors block text-right md:text-start"
                 >
                   📄 {isRtl ? "الشروط والأحكام" : "Terms & Conditions"}
@@ -124,8 +124,8 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               </li>
               <li className="pt-2 border-t border-slate-800">
                 <a
-                  href="#/blog"
-                  onClick={(e) => handleLinkClick(e, "#/blog")}
+                  href="/blog"
+                  onClick={(e) => handleLinkClick(e, "/blog")}
                   className="hover:text-sky-400 text-sky-400 font-semibold transition-colors block text-right md:text-start text-xs"
                 >
                   💡 {isRtl ? "مدونة النصائح المهنية والـ ATS" : "Career & ATS Advice Blog"}

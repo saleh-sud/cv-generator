@@ -35,7 +35,7 @@ export default function SeoCvPage({ slug, isRtl, onNavigate, onLoadCvDataToBuild
         <h2 className="text-2xl font-bold text-slate-800">العنصر غير موجود - Page Not Found</h2>
         <p className="text-slate-500 text-sm mt-2">تعذر العثور على نموذج السيرة الذاتية المطلوب.</p>
         <button 
-          onClick={() => onNavigate("#/")}
+          onClick={() => onNavigate("/")}
           className="mt-6 px-4 py-2 bg-sky-600 text-white font-medium rounded-lg text-sm cursor-pointer"
         >
           العودة للرئيسية
@@ -80,7 +80,7 @@ ${cv.skills.join(" - ")}
     // Pre-load data to the live builder page
     onLoadCvDataToBuilder(cv, isRtl ? "ar" : "en");
     // Redirect to builder
-    onNavigate(isRtl ? "#/tools/cv-generator-ar" : "#/tools/cv-generator-en");
+    onNavigate(isRtl ? "/tools/cv-generator-ar" : "/tools/cv-generator-en");
   };
 
   return (
@@ -88,7 +88,7 @@ ${cv.skills.join(" - ")}
       
       {/* Sitemap breadcrumb navigator */}
       <nav className="mb-6 flex items-center gap-1.5 text-xs text-slate-500 font-medium select-none">
-        <button onClick={() => onNavigate("#/")} className="hover:text-sky-600 cursor-pointer">
+        <button onClick={() => onNavigate("/")} className="hover:text-sky-600 cursor-pointer">
           {isRtl ? "الرئيسية" : "Home"}
         </button>
         <span>/</span>

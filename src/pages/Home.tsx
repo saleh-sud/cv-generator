@@ -128,7 +128,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
             {/* Action buttons */}
             <div className="flex flex-wrap gap-4">
               <button
-                onClick={() => onNavigate("#/tools/cv-generator-ar")}
+                onClick={() => onNavigate("/tools/cv-generator-ar")}
                 className="flex items-center gap-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold transition-all shadow-md shadow-blue-200 cursor-pointer hover:shadow-lg hover:-translate-y-0.5 text-sm sm:text-base"
               >
                 <span>{isRtl ? "إنشاء CV عربي جاهز" : "Design Arabic Resume"}</span>
@@ -136,7 +136,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
               </button>
               
               <button
-                onClick={() => onNavigate("#/tools/cv-generator-en")}
+                onClick={() => onNavigate("/tools/cv-generator-en")}
                 className="flex items-center gap-2 px-6 py-3.5 bg-slate-800 hover:bg-slate-900 text-white rounded-2xl font-bold transition-all hover:shadow-md hover:-translate-y-0.5 text-sm sm:text-base cursor-pointer"
               >
                 <span>{isRtl ? "Create English CV" : "Create English Resume"}</span>
@@ -152,7 +152,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
 
         {/* Bento Card 2: Quick Tool Job Description Builder (spans 4 cols on desktop) */}
         <div 
-          onClick={() => onNavigate("#/tools/job-description-generator")}
+          onClick={() => onNavigate("/tools/job-description-generator")}
           className="lg:col-span-4 bg-slate-900 rounded-3xl p-6 sm:p-8 text-white relative overflow-hidden flex flex-col justify-between shadow-md hover:shadow-lg transition-all duration-300 group cursor-pointer border border-slate-800"
         >
           <div className="relative z-10 flex flex-col h-full justify-between">
@@ -213,7 +213,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
 
         {/* Bento Card 4: Immersive Career Advisory Blog post (spans 6 cols on desktop) */}
         <div 
-          onClick={() => onNavigate("#/blog/how-to-bypass-ats-screening")}
+          onClick={() => onNavigate("/blog/how-to-bypass-ats-screening")}
           className="md:col-span-12 lg:col-span-6 bg-blue-600 hover:bg-blue-700 rounded-3xl p-6 text-white flex flex-col justify-between relative overflow-hidden group shadow-md transition-all duration-300 cursor-pointer"
         >
           <div className="relative z-10 flex flex-col h-full justify-between">
@@ -325,7 +325,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
               {SEO_CV_TEMPLATES.map((item) => (
                 <button
                   key={item.slug}
-                  onClick={() => onNavigate(`#/cv/${item.slug}`)}
+                  onClick={() => onNavigate(`/cv/${item.slug}`)}
                   className="flex items-center justify-between p-3.5 rounded-2xl border border-slate-100 hover:border-blue-400 hover:bg-blue-50/20 text-xs sm:text-sm font-bold text-slate-700 transition-all text-right md:text-start cursor-pointer"
                 >
                   <span className="truncate">{isRtl ? item.titleAr : item.titleEn}</span>
@@ -345,7 +345,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
               {SEO_JOB_TEMPLATES.map((item) => (
                 <button
                   key={item.slug}
-                  onClick={() => onNavigate(`#/job-description/${item.slug}`)}
+                  onClick={() => onNavigate(`/job-description/${item.slug}`)}
                   className="flex items-center justify-between p-3.5 rounded-2xl border border-slate-100 hover:border-emerald-400 hover:bg-emerald-50/20 text-xs sm:text-sm font-bold text-slate-700 transition-all text-right md:text-start cursor-pointer"
                 >
                   <span className="truncate">{isRtl ? `وصف ${item.titleAr}` : item.titleEn}</span>

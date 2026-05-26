@@ -13,31 +13,31 @@ import { CVData, JobDescInput } from "./types";
 import { AlertCircle, HelpCircle } from "lucide-react";
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState<string>("#/");
+  const [currentRoute, setCurrentRoute] = useState<string>("/");
   const [isRtl, setIsRtl] = useState<boolean>(true);
 
-  // Synchronize route hash on mount and window navigate
+  // Synchronize route path on mount and window navigate
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash || "#/";
-      setCurrentRoute(hash);
+    const handlepathChange = () => {
+      const path = window.location.pathname || "/";
+          setCurrentRoute(path);
       
       // Auto scroll to top of viewport on path modification
       window.scrollTo({ top: 0, behavior: "instant" as any });
 
       // Smart direction toggle depending on path preferences
-      if (hash.includes("cv-generator-en") || hash.includes("en-cv")) {
+      if (path.includes("cv-generator-en") || path.includes("en-cv")) {
         setIsRtl(false);
-      } else if (hash.includes("cv-generator-ar") || hash.includes("ar-cv")) {
+      } else if (path.includes("cv-generator-ar") || path.includes("ar-cv")) {
         setIsRtl(true);
       }
     };
 
-    window.addEventListener("hashchange", handleHashChange);
-    handleHashChange(); // Run check on initial load
+       window.addEventListener("popstate", handlepathChange);
+    handlepathChange(); // Run check on initial load
 
     return () => {
-      window.removeEventListener("hashchange", handleHashChange);
+     window.removeEventListener("popstate", handlepathChange);
     };
   }, []);
 
@@ -52,17 +52,22 @@ export default function App() {
     setIsRtl(nextRtl);
 
     // Auto toggle page if they are on a language-specific CV builder
-    if (currentRoute === "#/tools/cv-generator-ar" && !nextRtl) {
-      handleNavigate("#/tools/cv-generator-en");
-    } else if (currentRoute === "#/tools/cv-generator-en" && nextRtl) {
-      handleNavigate("#/tools/cv-generator-ar");
+    if (currentRoute === "/tools/cv-generator-ar" && !nextRtl) {
+      handleNavigate("/tools/cv-generator-en");
+    } else if (currentRoute === "/tools/cv-generator-en" && nextRtl) {
+      handleNavigate("/tools/cv-generator-ar");
     }
   };
 
   const handleNavigate = (route: string) => {
-    window.location.hash = route;
-    setCurrentRoute(route);
-  };
+  window.history.pushState({}, "", route);
+  setCurrentRoute(route);
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 
   // Seeding tools dynamically
   const handleLoadCvDataToBuilder = (data: CVData, language: "ar" | "en") => {
@@ -79,34 +84,34 @@ export default function App() {
 
   // Routing Switch Statement
   const renderActivePage = () => {
-    const hash = currentRoute;
+    const path = currentRoute;
 
     // 1. Main routes
-    if (hash === "#/" || hash === "") {
+    if (path === "/" || path === "") {
       return <Home isRtl={isRtl} onNavigate={handleNavigate} />;
     }
-    if (hash === "#/tools/cv-generator-ar") {
+    if (path === "/tools/cv-generator-ar") {
       return <CvGeneratorAr />;
     }
-    if (hash === "#/tools/cv-generator-en") {
+    if (path === "/tools/cv-generator-en") {
       return <CvGeneratorEn />;
     }
-    if (hash === "#/tools/job-description-generator") {
+    if (path === "/tools/job-description-generator") {
       return <JobDescriptionGenerator globalIsRtl={isRtl} />;
     }
-    if (hash === "#/blog") {
+    if (path === "/blog") {
       return <Blog isRtl={isRtl} onNavigate={handleNavigate} />;
     }
 
     // 2. Dynamic Blog posts
-    if (hash.startsWith("#/blog/")) {
-      const slug = hash.replace("#/blog/", "");
+    if (path.startsWith("/blog/")) {
+      const slug = path.replace("/blog/", "");
       return <Blog articleSlug={slug} isRtl={isRtl} onNavigate={handleNavigate} />;
     }
 
     // 3. Dynamic SEO CV Templates
-    if (hash.startsWith("#/cv/")) {
-      const slug = hash.replace("#/cv/", "");
+    if (path.startsWith("/cv/")) {
+      const slug = path.replace("/cv/", "");
       return (
         <SeoCvPage 
           slug={slug} 
@@ -118,8 +123,8 @@ export default function App() {
     }
 
     // 4. Dynamic SEO Job Descriptions
-    if (hash.startsWith("#/job-description/")) {
-      const slug = hash.replace("#/job-description/", "");
+    if (path.startsWith("/job-description/")) {
+      const slug = path.replace("/job-description/", "");
       return (
         <SeoJobPage 
           slug={slug} 
@@ -131,16 +136,16 @@ export default function App() {
     }
 
     // 5. Static Legal Content
-    if (hash === "#/privacy-policy") {
+    if (path === "/privacy-policy") {
       return <Legal pageType="privacy" isRtl={isRtl} onNavigate={handleNavigate} />;
     }
-    if (hash === "#/terms") {
+    if (path === "/terms") {
       return <Legal pageType="terms" isRtl={isRtl} onNavigate={handleNavigate} />;
     }
-    if (hash === "#/about") {
+    if (path === "/about") {
       return <Legal pageType="about" isRtl={isRtl} onNavigate={handleNavigate} />;
     }
-    if (hash === "#/contact") {
+    if (path === "/contact") {
       return <Legal pageType="contact" isRtl={isRtl} onNavigate={handleNavigate} />;
     }
 
@@ -155,7 +160,7 @@ export default function App() {
             : "Apologies, the web-link you are accessing does not exist or has been relocated."}
         </p>
         <button
-          onClick={() => handleNavigate("#/")}
+          onClick={() => handleNavigate("/")}
           className="mt-8 px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl transition-all shadow-md cursor-pointer"
         >
           {isRtl ? "العودة للواجهة الرئيسية" : "Return to Homepage"}
