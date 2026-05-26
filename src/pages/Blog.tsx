@@ -57,6 +57,7 @@ export default function Blog({
         description
       );
 
+          console.log(metaDescription);
       let ogTitle = document.querySelector(
         'meta[property="og:title"]'
       );
