@@ -253,4 +253,460 @@ French for 'summary'. It operates strictly as a promotional document matching a 
 | **Best For** | Scholars, medical, PhDs & research | Tech, commercial sectors, corporations |
 | **Editing** | Static, updated sequentially | Dynamic, redesigned per individual application |`
   }
+,
+{
+  id: "6",
+  title: "أفضل قوالب السيرة الذاتية لعام 2026",
+  titleEn: "Best CV Templates for 2026",
+  slug: "best-cv-templates-2026",
+
+  summary: "تعرف على أفضل تنسيقات وقوالب السير الذاتية الحديثة المتوافقة مع ATS.",
+
+  summaryEn: "Explore the best ATS-friendly CV layouts and structures for 2026.",
+
+  category: "السيرة الذاتية",
+  categoryEn: "Resume Tips",
+
+  readTime: "4 دقائق",
+
+  date: "2026-05-24",
+
+  content: `
+### لماذا القالب مهم؟
+
+اختيار قالب السيرة الذاتية يؤثر مباشرة على:
+- القراءة
+- اجتياز ATS
+- الانطباع الأول
+
+### أفضل أنواع القوالب
+
+- ATS Simple
+- Modern Clean
+- Minimal Layout
+
+### ماذا يجب تجنبه؟
+
+- الألوان الكثيرة
+- الأعمدة المعقدة
+- الرسومات الثقيلة
+  `,
+
+  contentEn: `
+### Why Templates Matter
+
+CV templates influence:
+- readability
+- ATS parsing
+- recruiter attention
+
+### Best CV Formats
+
+- ATS Simple
+- Modern Clean
+- Minimal Layout
+  `
+},
+{
+  id: "7",
+
+  title: "كيف تكتب سيرة ذاتية بدون خبرة؟",
+
+  titleEn: "How to Write a CV Without Experience",
+
+  slug: "cv-without-experience",
+
+  summary:
+    "تعلم كيفية كتابة سيرة ذاتية احترافية حتى لو لم تمتلك خبرة عملية سابقة.",
+
+  summaryEn:
+    "Learn how to build a professional resume even without previous work experience.",
+
+  category: "السيرة الذاتية",
+  categoryEn: "Career Tips",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-24",
+
+  content: `
+### هل يمكن الحصول على وظيفة بدون خبرة؟
+
+نعم، الكثير من الشركات توظف حديثي التخرج إذا كانت السيرة الذاتية منظمة بشكل جيد.
+
+### ركز على هذه الأشياء
+
+- المهارات
+- الدورات التدريبية
+- المشاريع الجامعية
+- العمل التطوعي
+- اللغات
+
+### اكتب ملخصًا احترافيًا
+
+اشرح أهدافك المهنية وما تستطيع تقديمه للشركة.
+
+### أضف المشاريع الشخصية
+
+حتى المشاريع الصغيرة أو مواقع الويب الشخصية تعتبر خبرة مفيدة.
+
+### لا تكذب
+
+لا تضف خبرات وهمية لأن المقابلة ستكشف ذلك بسرعة.
+  `,
+
+  contentEn: `
+### Can You Get a Job Without Experience?
+
+Yes. Many companies hire fresh graduates with strong resumes.
+
+### Focus On
+
+- Skills
+- Courses
+- University projects
+- Volunteer work
+- Languages
+
+### Write a Strong Summary
+
+Explain your goals and what value you can bring.
+
+### Add Personal Projects
+
+Even small personal projects can improve your credibility.
+
+### Never Fake Experience
+
+Recruiters can quickly identify fake information during interviews.
+  `
+},
+{
+  id: "8",
+
+  title: "أخطاء شائعة تؤدي لرفض السيرة الذاتية",
+
+  titleEn: "Common Resume Mistakes That Get You Rejected",
+
+  slug: "common-cv-mistakes",
+
+  summary:
+    "اكتشف أشهر الأخطاء التي تسبب رفض السير الذاتية وكيف تتجنبها.",
+
+  summaryEn:
+    "Learn the most common CV mistakes that reduce your interview chances.",
+
+  category: "السيرة الذاتية",
+  categoryEn: "Resume Tips",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-24",
+
+  content: `
+### 1. الأخطاء الإملائية
+
+الأخطاء اللغوية تعطي انطباعًا بعدم الاحترافية.
+
+### 2. استخدام تصميم معقد
+
+التصاميم الثقيلة قد تفشل مع أنظمة ATS.
+
+### 3. سيرة ذاتية طويلة جدًا
+
+يفضل أن تكون مختصرة وواضحة.
+
+### 4. معلومات غير مهمة
+
+تجنب إضافة معلومات لا تفيد الوظيفة.
+
+### 5. استخدام بريد إلكتروني غير احترافي
+
+استخدم بريدًا رسميًا يحتوي اسمك الحقيقي.
+
+### 6. إرسال نفس السيرة لكل الوظائف
+
+قم بتخصيص السيرة حسب الوظيفة المطلوبة.
+  `,
+
+  contentEn: `
+### 1. Spelling Mistakes
+
+Grammar errors reduce professionalism instantly.
+
+### 2. Complex Designs
+
+Heavy layouts often fail ATS systems.
+
+### 3. Very Long Resumes
+
+Keep your resume clean and concise.
+
+### 4. Irrelevant Information
+
+Only include information related to the target role.
+
+### 5. Unprofessional Email Address
+
+Use a professional email with your real name.
+
+### 6. Sending the Same Resume Everywhere
+
+Customize your CV for each application.
+  `
+},
+{
+  id: "9",
+
+  title: "أفضل تنسيق للسيرة الذاتية الحديثة",
+
+  titleEn: "Best Modern CV Format",
+
+  slug: "modern-cv-format",
+
+  summary:
+    "تعرف على أفضل تنسيق حديث للسيرة الذاتية يساعدك على جذب انتباه مسؤولي التوظيف.",
+
+  summaryEn:
+    "Discover the best modern resume layout to impress recruiters and improve readability.",
+
+  category: "السيرة الذاتية",
+  categoryEn: "Resume Design",
+
+  readTime: "4 دقائق",
+
+  date: "2026-05-24",
+
+  content: `
+### لماذا التنسيق مهم؟
+
+حتى لو كانت خبراتك قوية، فإن التنسيق السيء قد يجعل السيرة الذاتية تبدو غير احترافية.
+
+### أفضل خصائص التنسيق الحديث
+
+- خطوط واضحة
+- ألوان بسيطة
+- مسافات مريحة
+- ترتيب منطقي للمعلومات
+
+### الأقسام الأساسية
+
+- المعلومات الشخصية
+- الملخص المهني
+- الخبرات
+- المهارات
+- التعليم
+
+### ماذا يجب تجنبه؟
+
+- الزخارف المبالغ بها
+- الألوان الكثيرة
+- الخطوط الغريبة
+- الفقرات الطويلة جدًا
+
+### نصيحة
+
+حافظ على البساطة لأن مسؤولي التوظيف يفضلون القراءة السريعة والواضحة.
+  `,
+
+  contentEn: `
+### Why Does Formatting Matter?
+
+Even strong experience can look weak with poor formatting.
+
+### Best Modern Resume Features
+
+- Clean fonts
+- Minimal colors
+- Comfortable spacing
+- Logical information flow
+
+### Essential Sections
+
+- Contact information
+- Professional summary
+- Experience
+- Skills
+- Education
+
+### What to Avoid
+
+- Excessive decorations
+- Too many colors
+- Fancy fonts
+- Very long paragraphs
+
+### Important Tip
+
+Recruiters prefer clean and easy-to-read resumes.
+  `
+},
+{
+  id: "10",
+
+  title: "كيف تتجاوز نظام ATS بنجاح؟",
+
+  titleEn: "How to Pass ATS Systems Successfully",
+
+  slug: "how-to-pass-ats",
+
+  summary:
+    "تعلم أهم الخطوات العملية لتجاوز أنظمة التوظيف الآلية وزيادة فرص وصول سيرتك الذاتية للمقابلة.",
+
+  summaryEn:
+    "Learn practical strategies to improve ATS compatibility and increase interview opportunities.",
+
+  category: "ATS",
+  categoryEn: "ATS Systems",
+
+  readTime: "6 دقائق",
+
+  date: "2026-05-24",
+
+  content: `
+### ما هو نظام ATS؟
+
+هو برنامج تستخدمه الشركات لفحص السير الذاتية تلقائيًا.
+
+### كيف يعمل؟
+
+يقوم بتحليل:
+- الكلمات المفتاحية
+- المهارات
+- الخبرات
+- تنسيق الملف
+
+### أهم النصائح لتجاوزه
+
+- استخدم تنسيق بسيط
+- أضف كلمات مفتاحية من الإعلان الوظيفي
+- استخدم عناوين واضحة
+- تجنب الجداول المعقدة
+
+### أفضل صيغة للملف
+
+يفضل استخدام:
+- PDF قابل للنسخ
+- أو DOCX
+
+### أخطاء شائعة
+
+- استخدام صور داخل السيرة
+- تصميمات معقدة
+- ملفات غير قابلة للقراءة
+  `,
+
+  contentEn: `
+### What is ATS?
+
+ATS stands for Applicant Tracking System.
+
+### How Does It Work?
+
+It scans:
+- keywords
+- skills
+- experience
+- resume formatting
+
+### Best ATS Tips
+
+- Use simple layouts
+- Include job keywords
+- Use clear headings
+- Avoid complex tables
+
+### Best File Formats
+
+Use:
+- selectable PDF
+- DOCX files
+
+### Common Mistakes
+
+- using images
+- complex designs
+- unreadable files
+  `
+},
+{
+  id: "11",
+
+  title: "أفضل مواقع البحث عن عمل في 2026",
+
+  titleEn: "Best Job Search Websites in 2026",
+
+  slug: "best-job-websites-2026",
+
+  summary:
+    "تعرف على أفضل مواقع التوظيف والبحث عن عمل التي تساعدك في العثور على فرص مناسبة بسرعة.",
+
+  summaryEn:
+    "Explore the best job platforms and recruitment websites for finding opportunities in 2026.",
+
+  category: "التوظيف",
+  categoryEn: "Jobs",
+
+  readTime: "5 دقائق",
+
+  date: "2026-05-24",
+
+  content: `
+### لماذا مواقع التوظيف مهمة؟
+
+توفر آلاف الفرص الوظيفية في مختلف المجالات والدول.
+
+### أفضل المواقع العالمية
+
+- LinkedIn
+- Indeed
+- Glassdoor
+- RemoteOK
+
+### مواقع عربية مفيدة
+
+- بيت.كوم
+- وظف
+- فرصنا
+
+### نصائح مهمة
+
+- حدّث سيرتك الذاتية باستمرار
+- استخدم كلمات مفتاحية
+- فعّل التنبيهات البريدية
+
+### لا تعتمد على موقع واحد
+
+التقديم عبر عدة منصات يزيد فرصك بالحصول على مقابلات.
+  `,
+
+  contentEn: `
+### Why Job Platforms Matter?
+
+They provide thousands of opportunities across industries.
+
+### Best International Platforms
+
+- LinkedIn
+- Indeed
+- Glassdoor
+- RemoteOK
+
+### Useful Arabic Platforms
+
+- Bayt
+- Wuzzuf
+- Forasna
+
+### Important Tips
+
+- Update your resume regularly
+- Use keywords
+- Enable job alerts
+
+### Do Not Rely on One Platform
+
+Applying through multiple websites increases your chances.
+  `
+}
 ];
