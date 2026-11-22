@@ -7,6 +7,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { build } from "esbuild";
 
 const ROOT = process.cwd();
@@ -25,7 +26,7 @@ await build({
   outfile: tmp,
   logLevel: "silent",
 });
-const { getAllRoutes, NOT_FOUND_META } = await import(`${tmp}?v=${Date.now()}`);
+const { getAllRoutes, NOT_FOUND_META } = await import(`${pathToFileURL(tmp).href}?v=${Date.now()}`);
 fs.rmSync(tmp, { force: true });
 
 const routes = getAllRoutes();
