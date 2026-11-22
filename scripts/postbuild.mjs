@@ -57,19 +57,70 @@ ${routes
 </urlset>
 `;
 fs.writeFileSync(path.join(DIST, "sitemap.xml"), sitemap);
-// فهرس sitemap إضافي، وملف مفتاح IndexNow (لـ Bing / Yandex)
+// sitemap مقسوم: صفحات الموقع / المقالات، وفهرس يجمعهما
+const urlset = (list) => `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${list
+  .filter((r) => !r.noindex)
+  .map(
+    (r) => `  <url>
+    <loc>${esc(urlOf(r.path))}</loc>
+    <lastmod>${r.lastmod || today}</lastmod>
+    <changefreq>${r.changefreq}</changefreq>
+    <priority>${r.priority}</priority>
+  </url>`
+  )
+  .join("\n")}
+</urlset>
+`;
+fs.writeFileSync(path.join(DIST, "sitemap-pages.xml"), urlset(routes.filter((r) => !r.article)));
+fs.writeFileSync(path.join(DIST, "sitemap-articles.xml"), urlset(routes.filter((r) => r.article)));
 fs.writeFileSync(
   path.join(DIST, "sitemap-index.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap><loc>${SITE_URL}/sitemap.xml</loc><lastmod>${today}</lastmod></sitemap>
+  <sitemap><loc>${SITE_URL}/sitemap-pages.xml</loc><lastmod>${today}</lastmod></sitemap>
+  <sitemap><loc>${SITE_URL}/sitemap-articles.xml</loc><lastmod>${today}</lastmod></sitemap>
 </sitemapindex>
 `
 );
+
+// خلاصة RSS لأحدث المقالات (جوجل وBing يقرآنها لاكتشاف المقالات الجديدة بسرعة)
+const rssItems = routes
+  .filter((r) => r.article && r.articleLang === "ar")
+  .slice(0, 50)
+  .map(
+    (r) => `    <item>
+      <title>${esc(r.article.title)}</title>
+      <link>${esc(urlOf(r.path))}</link>
+      <guid isPermaLink="true">${esc(urlOf(r.path))}</guid>
+      <pubDate>${new Date(`${r.article.date}T08:00:00Z`).toUTCString()}</pubDate>
+      <category>${esc(r.article.category)}</category>
+      <description>${esc(r.article.summary)}</description>
+    </item>`
+  )
+  .join("\n");
+fs.writeFileSync(
+  path.join(DIST, "rss.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${esc(config.siteNameAr)} — المدونة</title>
+    <link>${SITE_URL}/blog</link>
+    <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
+    <description>مقالات عن كتابة السيرة الذاتية والمقابلات والبحث عن عمل</description>
+    <language>ar</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+${rssItems}
+  </channel>
+</rss>
+`
+);
+
 if (config.indexNowKey) fs.writeFileSync(path.join(DIST, `${config.indexNowKey}.txt`), config.indexNowKey);
 fs.writeFileSync(
   path.join(DIST, "robots.txt"),
-  `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-index.xml\n`
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap: ${SITE_URL}/rss.xml\n`
 );
 
 // ---------- 2) prerender ----------
