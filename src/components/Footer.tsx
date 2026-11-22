@@ -1,5 +1,6 @@
 import React from "react";
 import { Briefcase, FileText, Library, HelpCircle, ShieldCheck } from "lucide-react";
+import { SITE } from "../config/site";
 import { SEO_CV_TEMPLATES, SEO_JOB_TEMPLATES } from "../data/seoTemplates";
 
 interface FooterProps {
@@ -28,11 +29,11 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
             </div>
             <p className="text-sm text-slate-400 leading-relaxed">
               {isRtl 
-                ? "منصة مجانية وعلمية لتصميم السير الذاتية وتوليد الأوصاف الوظيفية بدقة عالية، تم كودها وفق معايير التوافق مع أنظمة التوظيف ATS لرفع نسب القبول."
+                ? "منصة مجانية وعلمية لتصميم السير الذاتية وتوليد الأوصاف الوظيفية بدقة عالية، مبنية وفق معايير التوافق مع أنظمة التوظيف ATS لرفع نسب القبول."
                 : "A free platform to draft professional resumes and compile job descriptions, optimized for ATS parsers to enhance hiring callback frequencies."}
             </p>
             <div className="text-xs text-slate-400">
-              <p>© {new Date().getFullYear()} {isRtl ? "جميع الحقوق محفوظة للكود." : "All rights reserved."}</p>
+              <p>© {new Date().getFullYear()} {isRtl ? "جميع الحقوق محفوظة." : "All rights reserved."}</p>
               <p className="mt-1 font-mono text-sky-400/80">{isRtl ? "تعديل محلي آمن في المتصفح" : "Secure browser-side creation"}</p>
             </div>
           </div>
@@ -122,6 +123,18 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
                   📄 {isRtl ? "الشروط والأحكام" : "Terms & Conditions"}
                 </a>
               </li>
+              {SITE.waslUrl && (
+                <li>
+                  <a
+                    href={SITE.waslUrl}
+                    target="_blank"
+                    rel="noopener"
+                    className="hover:text-sky-400 transition-colors block text-right md:text-start"
+                  >
+                    🔗 {isRtl ? "تابعنا على وصل (WASL)" : "Find us on WASL"}
+                  </a>
+                </li>
+              )}
               <li className="pt-2 border-t border-slate-800">
                 <a
                   href="/blog"
@@ -140,8 +153,8 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
         <div className="mt-12 pt-8 border-t border-slate-850 text-center text-xs text-slate-500 leading-relaxed">
           <p>
             {isRtl 
-              ? "إخلاء مسؤولية: السير الذاتية والبيانات المالية المدخلة تُعالج كليًا على متصفحك الشخصي عبر ملفات localStorage المحلية. لا نقوم برفع أو حفظ أو تداول أية معلومات حساسة تخص المستخدمين كونه نظامًا حياديًا وآمنًا بالكامل."
-              : "Disclaimer: Resumes and personal data are computed inside your web-browser using local storage algorithms. We never log, upload or process any personnel records, keeping your workspace privately protected."}
+              ? "إخلاء مسؤولية: بيانات السيرة الذاتية التي تدخلها تُعالج وتُحفظ على متصفحك فقط (localStorage) ولا تُرفع إلى خوادمنا. يعرض الموقع إعلانات وتحليلات من أطراف ثالثة، راجع سياسة الخصوصية."
+              : "Disclaimer: Your CV data is processed and stored in your browser only (localStorage) and is never uploaded to our servers. The site shows third-party ads and analytics; see the Privacy Policy."}
           </p>
         </div>
       </div>

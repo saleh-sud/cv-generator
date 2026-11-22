@@ -862,12 +862,6 @@ Compiled and styled via JobTools Professional Portal.
                   <span>{isRtl ? "اقتراح كفاءات" : "Suggest Skills"}</span>
                 </button>
               </div>
-
-              {/* Developer Integration Documentation Inline */}
-              <div className="mt-3.5 pt-2.5 border-t border-indigo-100 text-[9px] text-indigo-900/75 select-none font-mono">
-                <p className="font-bold">// Developer Note for API Integration:</p>
-                <p className="mt-0.5">💡 Run @google/genai module client-side or bind the buttons to proxy route /api/gemini safely.</p>
-              </div>
             </div>
 
             {/* Generated Output Preview Section */}

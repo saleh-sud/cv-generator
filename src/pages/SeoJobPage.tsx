@@ -3,6 +3,7 @@ import { Copy, Check, FileEdit, HelpCircle, Briefcase, Sparkles } from "lucide-r
 import { SEO_JOB_TEMPLATES } from "../data/seoTemplates";
 import { JobDescInput } from "../types";
 import AdSpace from "../components/AdSpace";
+import { setSeo } from "../utils/seo";
 
 interface SeoJobPageProps {
   slug: string;
@@ -20,12 +21,12 @@ export default function SeoJobPage({ slug, isRtl, onNavigate, onLoadJobDataToBui
 
   useEffect(() => {
     if (template) {
-      // Dynamic page title & description for SEO
-      document.title = isRtl ? template.metaTitleAr : template.metaTitleEn;
-      const metaDescription = document.getElementById("meta-desc");
-      if (metaDescription) {
-        metaDescription.setAttribute("content", isRtl ? template.metaDescAr : template.metaDescEn);
-      }
+      setSeo({
+        title: isRtl ? template.metaTitleAr : template.metaTitleEn,
+        description: isRtl ? template.metaDescAr : template.metaDescEn,
+        path: `/job-description/${template.slug}`,
+        lang: isRtl ? "ar" : "en",
+      });
     }
   }, [template, isRtl]);
 

@@ -3,6 +3,7 @@ import { ArrowRight, ArrowLeft, Copy, Check, FileEdit, HelpCircle, Lightbulb, Fi
 import { SEO_CV_TEMPLATES } from "../data/seoTemplates";
 import { CVData } from "../types";
 import AdSpace from "../components/AdSpace";
+import { setSeo } from "../utils/seo";
 
 interface SeoCvPageProps {
   slug: string;
@@ -20,12 +21,12 @@ export default function SeoCvPage({ slug, isRtl, onNavigate, onLoadCvDataToBuild
 
   useEffect(() => {
     if (template) {
-      // SEO Meta tag updates
-      document.title = isRtl ? template.metaTitleAr : template.metaTitleEn;
-      const metaDescription = document.getElementById("meta-desc");
-      if (metaDescription) {
-        metaDescription.setAttribute("content", isRtl ? template.metaDescAr : template.metaDescEn);
-      }
+      setSeo({
+        title: isRtl ? template.metaTitleAr : template.metaTitleEn,
+        description: isRtl ? template.metaDescAr : template.metaDescEn,
+        path: `/cv/${template.slug}`,
+        lang: isRtl ? "ar" : "en",
+      });
     }
   }, [template, isRtl]);
 

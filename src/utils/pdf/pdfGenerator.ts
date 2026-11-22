@@ -759,37 +759,17 @@ export async function downloadSelectablePdf(cv: CVData, isRtl: boolean, template
     };
   }
 
-  // Trigger browser download with robust double-fallback logic
+  // pdfmake 0.3.x: الخطوط والـ VFS تُسجَّل عبر addFonts/addVirtualFileSystem (وليس بتعيين الخصائص)،
+  // و download() يرجع Promise لذلك ننتظره حتى تُلتقط الأخطاء.
+  const pm = activePdfMake as any;
+  pm.addVirtualFileSystem(customVfs);
+  pm.addFonts(customFonts);
   try {
     console.log(`Starting PDF download with font choice: ${finalFontName}`);
-    
-    // Assign to pdfMake globally to bypass any signature and reference handling issues across modules/bundles
-    if (typeof window !== "undefined") {
-      (window as any).pdfMake = activePdfMake;
-    }
-    (activePdfMake as any).fonts = customFonts;
-    (activePdfMake as any).vfs = customVfs;
-
-    (activePdfMake as any).createPdf(docDefinition, undefined, customFonts, customVfs).download(outputFileName);
+    await pm.createPdf(docDefinition).download(outputFileName);
   } catch (downloadErr) {
     console.error("Dynamic font rendering failed. Falling back to built-in Roboto font...", downloadErr);
-    
-    // Explicitly modify the font parameter and generate under standard Roboto configuration
     docDefinition.defaultStyle.font = "Roboto";
-    const robotoFonts = {
-      Roboto: {
-        normal: "Roboto-Regular.ttf",
-        bold: "Roboto-Bold.ttf",
-        italics: "Roboto-Italic.ttf",
-        bolditalics: "Roboto-BoldItalic.ttf"
-      }
-    };
-    if (typeof window !== "undefined") {
-      (window as any).pdfMake = activePdfMake;
-    }
-    (activePdfMake as any).fonts = robotoFonts;
-    (activePdfMake as any).vfs = customVfs;
-    
-    (activePdfMake as any).createPdf(docDefinition, undefined, robotoFonts, customVfs).download(outputFileName);
+    await pm.createPdf(docDefinition).download(outputFileName);
   }
 }

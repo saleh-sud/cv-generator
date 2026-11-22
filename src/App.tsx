@@ -1,45 +1,59 @@
-import { useState, useEffect } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import GlobalAds from "./components/GlobalAds";
 import Home from "./pages/Home";
-import CvGeneratorAr from "./pages/CvGeneratorAr";
-import CvGeneratorEn from "./pages/CvGeneratorEn";
-import JobDescriptionGenerator from "./pages/JobDescriptionGenerator";
-import SeoCvPage from "./pages/SeoCvPage";
-import SeoJobPage from "./pages/SeoJobPage";
-import Blog from "./pages/Blog";
-import Legal from "./pages/Legal";
 import { CVData, JobDescInput } from "./types";
-import { AlertCircle, HelpCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
+import { getAllRoutes, NOT_FOUND_META, STATIC_ROUTES } from "./seo/routes";
+import { setSeo } from "./utils/seo";
+
+// تحميل كسول للصفحات الثقيلة (يقلّص حجم الحزمة الأولى بشكل كبير)
+const CvGeneratorAr = lazy(() => import("./pages/CvGeneratorAr"));
+const CvGeneratorEn = lazy(() => import("./pages/CvGeneratorEn"));
+const JobDescriptionGenerator = lazy(() => import("./pages/JobDescriptionGenerator"));
+const SeoCvPage = lazy(() => import("./pages/SeoCvPage"));
+const SeoJobPage = lazy(() => import("./pages/SeoJobPage"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Legal = lazy(() => import("./pages/Legal"));
+
+const normalizePath = (p: string) => {
+  const clean = (p || "/").split("?")[0].split("#")[0].replace(/\/+$/, "");
+  return clean === "" ? "/" : clean;
+};
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState<string>("/");
+  const [currentRoute, setCurrentRoute] = useState<string>(() => normalizePath(window.location.pathname));
   const [isRtl, setIsRtl] = useState<boolean>(true);
 
-  // Synchronize route path on mount and window navigate
+  // popstate (زر الرجوع/الأمام)
   useEffect(() => {
-    const handlepathChange = () => {
-      const path = window.location.pathname || "/";
-          setCurrentRoute(path);
-      
-      // Auto scroll to top of viewport on path modification
-      window.scrollTo({ top: 0, behavior: "instant" as any });
-
-      // Smart direction toggle depending on path preferences
-      if (path.includes("cv-generator-en") || path.includes("en-cv")) {
-        setIsRtl(false);
-      } else if (path.includes("cv-generator-ar") || path.includes("ar-cv")) {
-        setIsRtl(true);
-      }
-    };
-
-       window.addEventListener("popstate", handlepathChange);
-    handlepathChange(); // Run check on initial load
-
-    return () => {
-     window.removeEventListener("popstate", handlepathChange);
-    };
+    const onPop = () => setCurrentRoute(normalizePath(window.location.pathname));
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
   }, []);
+
+  // عند أي تغيير في المسار: اتجاه اللغة + SEO + الرجوع لأعلى الصفحة
+  useEffect(() => {
+    const path = currentRoute;
+    if (path === "/tools/cv-generator-en") setIsRtl(false);
+    else if (path === "/tools/cv-generator-ar") setIsRtl(true);
+
+    const staticRoute = STATIC_ROUTES.find((r) => r.path === path);
+    const isKnown = getAllRoutes().some((r) => r.path === path);
+    if (staticRoute) {
+      setSeo({
+        title: staticRoute.title,
+        description: staticRoute.description,
+        path,
+        lang: path === "/tools/cv-generator-en" ? "en" : "ar",
+      });
+    } else if (!isKnown) {
+      setSeo({ ...NOT_FOUND_META, path, noindex: true });
+    }
+    // المسارات الديناميكية (مقالات / نماذج) تضبط SEO داخل صفحاتها
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [currentRoute]);
 
   // Update root html attribute direction tag
   useEffect(() => {
@@ -60,14 +74,12 @@ export default function App() {
   };
 
   const handleNavigate = (route: string) => {
-  window.history.pushState({}, "", route);
-  setCurrentRoute(route);
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-};
+    const next = normalizePath(route);
+    if (next !== normalizePath(window.location.pathname)) {
+      window.history.pushState({}, "", next);
+    }
+    setCurrentRoute(next);
+  };
 
   // Seeding tools dynamically
   const handleLoadCvDataToBuilder = (data: CVData, language: "ar" | "en") => {
@@ -182,8 +194,11 @@ export default function App() {
 
       {/* Main core canvas layout */}
       <main className="flex-grow">
-        {renderActivePage()}
+        <Suspense fallback={<div className="py-24 text-center text-sm text-slate-400">...</div>}>
+          {renderActivePage()}
+        </Suspense>
       </main>
+      <GlobalAds />
 
       {/* Universal footer links */}
       <Footer isRtl={isRtl} onNavigate={handleNavigate} />

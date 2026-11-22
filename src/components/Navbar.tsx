@@ -55,8 +55,9 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
         <div className="flex justify-between items-center h-16">
           {/* Logo Brand Section */}
           <div className="flex items-center gap-3">
-            <button 
-              onClick={() => handleItemClick("/")}
+            <a
+              href="/"
+              onClick={(e) => { e.preventDefault(); handleItemClick("/"); }}
               className="flex items-center gap-2 text-blue-600 font-bold text-lg md:text-xl tracking-tight cursor-pointer"
             >
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xs font-black font-mono">
@@ -65,7 +66,7 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
               <span className="font-heading tracking-tight text-blue-900 font-black flex items-center gap-1.5 text-lg md:text-xl">
                 <span>{isRtl ? "أدوات الوظائف" : "JobTools"}</span>
               </span>
-            </button>
+            </a>
             <span className="hidden md:inline px-2.5 py-0.5 text-[10px] bg-blue-50 text-blue-600 font-extrabold rounded-full">
               {isRtl ? "مجاني" : "100% Free"}
             </span>
@@ -76,9 +77,10 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
             {navItems.map((item) => {
               const isActive = currentRoute === item.route;
               return (
-                <button
+                <a
                   key={item.route}
-                  onClick={() => handleItemClick(item.route)}
+                  href={item.route}
+                  onClick={(e) => { e.preventDefault(); handleItemClick(item.route); }}
                   className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
                     isActive
                       ? "bg-blue-50 text-blue-700"
@@ -89,7 +91,7 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
                     {item.icon && <item.icon className="w-4 h-4" />}
                     <span>{isRtl ? item.labelAr : item.labelEn}</span>
                   </div>
-                </button>
+                </a>
               );
             })}
           </nav>
@@ -131,9 +133,10 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
           {navItems.map((item) => {
             const isActive = currentRoute === item.route;
             return (
-              <button
+              <a
                 key={item.route}
-                onClick={() => handleItemClick(item.route)}
+                href={item.route}
+                onClick={(e) => { e.preventDefault(); handleItemClick(item.route); }}
                 className={`w-full block px-4 py-3 text-right rounded-lg text-base font-medium transition-all ${
                   isActive
                     ? "bg-blue-50 text-blue-700"
@@ -145,7 +148,7 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
                   {item.icon && <item.icon className="w-5 h-5" />}
                   <span>{isRtl ? item.labelAr : item.labelEn}</span>
                 </div>
-              </button>
+              </a>
             );
           })}
         </div>

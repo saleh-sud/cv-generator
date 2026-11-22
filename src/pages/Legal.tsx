@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { SITE } from "../config/site";
 import { Mail, Shield, FileSpreadsheet, Info, Check, Send, Sparkles } from "lucide-react";
 
 interface LegalProps {
@@ -11,25 +12,20 @@ export default function Legal({ pageType, isRtl, onNavigate }: LegalProps) {
   const [contactForm, setContactForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    const titles = {
-      privacy: isRtl ? "سياسة الخصوصية والأمان" : "Privacy Policy & Safe Storage",
-      terms: isRtl ? "الشروط والضوابط والأحكام" : "Terms & Conditions of Service",
-      contact: isRtl ? "اتصل بنا - تواصل مع الدعم" : "Contact Us - Support Channel",
-      about: isRtl ? "من نحن - عن منصة السير الذاتية" : "About Us - Resume platform"
-    };
-    document.title = titles[pageType];
-  }, [pageType, isRtl]);
-
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!contactForm.name || !contactForm.email || !contactForm.message) {
       alert(isRtl ? "يرجى تعبئة كافة الحقول الإلزامية." : "Please fill in all mandatory fields.");
       return;
     }
+    if (!SITE.contactEmail) return;
+    // لا يوجد خادم: نفتح تطبيق البريد لدى الزائر برسالة جاهزة
+    const subject = contactForm.subject || (isRtl ? "رسالة من الموقع" : "Message from website");
+    const body = `${contactForm.message}\n\n— ${contactForm.name} (${contactForm.email})`;
+    window.location.href = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSuccess(true);
     setContactForm({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setSuccess(false), 5000);
+    setTimeout(() => setSuccess(false), 8000);
   };
 
   return (
@@ -47,7 +43,7 @@ export default function Legal({ pageType, isRtl, onNavigate }: LegalProps) {
                 {isRtl ? "سياسة الخصوصية وأمان المستخدمين" : "Privacy Policy & Security Standards"}
               </h1>
               <p className="text-slate-400 text-xs mt-0.5">
-                {isRtl ? "تاريخ التحديث الأخير: مايو 2026" : "Last updated: May 2026"}
+                {isRtl ? "تاريخ التحديث الأخير: نوفمبر 2026" : "Last updated: November 2026"}
               </p>
             </div>
           </div>
@@ -71,32 +67,54 @@ export default function Legal({ pageType, isRtl, onNavigate }: LegalProps) {
 
             <h3 className="text-slate-900 font-extrabold text-base pt-3 border-b border-slate-50 pb-1 flex items-center gap-1.5">
               <span className="w-1.5 h-4 bg-rose-500 rounded-xs"></span>
-              {isRtl ? "2. عدم بيع البيانات للطرف الثالث" : "2. Zero Personnel Selling Guarantee"}
+              {isRtl ? "2. الإعلانات وملفات تعريف الارتباط (Cookies)" : "2. Advertising and Cookies"}
             </h3>
             <p>
-              {isRtl 
-                ? "نتعهد بأن الموقع لا يبيع، لا يقايض، ولا يشارك المعلومات المدخلة أو ملفات تعريف الارتباط لأي جهة ثالثة أو شركات تجميع البيانات التسويقية كونه موقعًا خدميًا مجانيًا غايته النفع العام."
-                : "We pledge that our website never trades, leases, or processes your raw text to any metrics tracking databases or data harvesters."}
+              {isRtl
+                ? "يعرض الموقع إعلانات عبر شبكات إعلانية خارجية، وقد تشمل HilltopAds وA-ADS وAdsterra. قد تستخدم هذه الشبكات ملفات تعريف الارتباط (Cookies) أو معرّفات مشابهة لعرض إعلانات وقياس أدائها وتقليل التكرار. هذه الجهات لها سياسات خصوصية مستقلة، ولا نملك التحكم في ما تجمعه. يمكنك حذف ملفات تعريف الارتباط أو حظرها من إعدادات متصفحك، أو استخدام إضافات حظر الإعلانات، وسيبقى الموقع يعمل."
+                : "This site shows ads served by third-party ad networks, which may include HilltopAds, A-ADS and Adsterra. These networks may use cookies or similar identifiers to serve and measure ads and limit repetition. They operate under their own privacy policies and we do not control what they collect. You can delete or block cookies in your browser settings or use an ad blocker; the tools will keep working."}
             </p>
 
             <h3 className="text-slate-900 font-extrabold text-base pt-3 border-b border-slate-50 pb-1 flex items-center gap-1.5">
               <span className="w-1.5 h-4 bg-rose-500 rounded-xs"></span>
-              {isRtl ? "3. الإعلانات ومزودي الخدمات الخارجين" : "3. Commercial Advertising and AdSense"}
+              {isRtl ? "3. تحليلات الزيارات (Google Analytics)" : "3. Analytics (Google Analytics)"}
             </h3>
             <p>
-              {isRtl 
-                ? "قد نقوم مستقبلاً بإدراج شبكات إعلانية معتمدة من طرف ثالث (مثل Google AdSense) تظهر في الأماكن وبانرات المخصصة مسبقاً في الموقع من أجل كفاية تكلفة استضافات المنصة لتظل مجانية. قد يتضمن هؤلاء الشركاء ملفات تعريف ارتباط (Cookies) عامة فقط لفهم اهتمامات التصفح السطحية."
-                : "To keep our workspace free for everyone, we might introduce standard trusted advertising networks (such as Google AdSense) inside the pre-set placeholder bans of our page. These cookies track anonymous interest categories to display high relevance metrics."}
+              {isRtl
+                ? "نستخدم Google Analytics لمعرفة عدد الزوار والصفحات الأكثر زيارة والبلدان والأجهزة، بشكل إحصائي مجمّع. لا نرسل إلى Google محتوى سيرتك الذاتية أو ما تكتبه في الأدوات."
+                : "We use Google Analytics to understand aggregate visitor numbers, popular pages, countries and devices. The content of your CV or anything you type into the tools is not sent to Google."}
             </p>
 
             <h3 className="text-slate-900 font-extrabold text-base pt-3 border-b border-slate-50 pb-1 flex items-center gap-1.5">
               <span className="w-1.5 h-4 bg-rose-500 rounded-xs"></span>
-              {isRtl ? "4. تتبع زيارات زوار الموقع" : "4. Site Analytics and Google Crawler"}
+              {isRtl ? "4. عدم بيع بياناتك الشخصية" : "4. We Do Not Sell Your Personal Data"}
             </h3>
             <p>
-              {isRtl 
-                ? "قد يتم مستقبلاً الاستعانة بأدوات تحليل زيارات الويب العامة (مثل Google Analytics) لمعرفة أعداد زوار المنصة، البلدان الأكثر فاعلية، وصفحات السير والأوصاف الأكثر طلباً لتحسين فاعلية الهيكل وتقديم خيارات برمجية أفضل."
-                : "To coordinate infrastructure priorities, we might integrate basic anonymous analytics engines (like Google Analytics) to observe regional traffic spikes, and evaluate page conversion patterns to construct faster capabilities."}
+              {isRtl
+                ? "لا نبيع ولا نؤجر المعلومات التي تُدخلها في الأدوات، لأنها لا تصل إلينا أصلاً. ما يجمعه مزودو الإعلانات والتحليلات (كمعرّفات المتصفح والـ IP التقريبي) يخضع لسياساتهم."
+                : "We do not sell or rent the information you enter into the tools, since it never reaches us. Data collected by ad and analytics providers (such as browser identifiers and approximate IP) is governed by their own policies."}
+            </p>
+
+            <h3 className="text-slate-900 font-extrabold text-base pt-3 border-b border-slate-50 pb-1 flex items-center gap-1.5">
+              <span className="w-1.5 h-4 bg-rose-500 rounded-xs"></span>
+              {isRtl ? "5. الأطفال وروابط المواقع الخارجية" : "5. Children and External Links"}
+            </h3>
+            <p>
+              {isRtl
+                ? "الموقع غير موجّه للأطفال دون 13 عاماً. قد يحتوي الموقع على روابط لمواقع خارجية (ومنها الإعلانات) لسنا مسؤولين عن محتواها أو سياساتها."
+                : "The site is not directed at children under 13. It may link to external sites (including ads) whose content and policies we are not responsible for."}
+            </p>
+
+            <h3 className="text-slate-900 font-extrabold text-base pt-3 border-b border-slate-50 pb-1 flex items-center gap-1.5">
+              <span className="w-1.5 h-4 bg-rose-500 rounded-xs"></span>
+              {isRtl ? "6. التواصل" : "6. Contact"}
+            </h3>
+            <p>
+              {isRtl ? "لأي استفسار حول الخصوصية، استخدم صفحة " : "For any privacy question, use the "}
+              <a href="/contact" onClick={(e) => { e.preventDefault(); onNavigate("/contact"); }} className="text-sky-600 underline">
+                {isRtl ? "تواصل معنا" : "Contact page"}
+              </a>
+              {isRtl ? "." : "."}
             </p>
           </div>
         </div>
@@ -144,6 +162,18 @@ export default function Legal({ pageType, isRtl, onNavigate }: LegalProps) {
                 {isRtl 
                   ? " يتم تقديم هذه الأدوات المكتوبة 'كما هي' دون ضمانات صريحة أو ضمنية بنجاح قبول التعيين، فالشركة أو المنصة لا تمثل وكالة توظيف ولا تقدم وعوداً بمكالمات مريرة بل تسهل لك الصياغة والكيان ميكانيكياً."
                   : " We supply these formatting layout tools 'as is'. We offer zero implied warranties that presenting our ATS models will secure immediate callbacks or workplace hires."}
+              </li>
+              <li>
+                <strong>{isRtl ? "الإعلانات والروابط الخارجية:" : "Ads and External Links:"}</strong>
+                {isRtl
+                  ? " يعرض الموقع إعلانات من أطراف ثالثة لتمويل الخدمة المجانية. لا نتحمل مسؤولية محتوى المعلن أو المواقع التي تنقلك إليها الإعلانات، ونوصي بالحذر عند التعامل معها."
+                  : " The site shows third-party ads to fund the free service. We are not responsible for advertiser content or the sites ads lead to; please use caution."}
+              </li>
+              <li>
+                <strong>{isRtl ? "التعديل والتوقف:" : "Changes and Availability:"}</strong>
+                {isRtl
+                  ? " قد نعدّل هذه الشروط أو الخدمة أو نوقفها في أي وقت دون إشعار مسبق. استمرارك في الاستخدام يعني موافقتك على النسخة الحالية."
+                  : " We may modify these terms or the service, or discontinue it, at any time without notice. Continued use means you accept the current version."}
               </li>
             </ul>
           </div>
@@ -204,14 +234,25 @@ export default function Legal({ pageType, isRtl, onNavigate }: LegalProps) {
             </div>
           </div>
 
-          {success ? (
+          {SITE.contactEmail && (
+            <p className="mb-5 text-sm text-slate-600">
+              {isRtl ? "البريد الإلكتروني: " : "Email: "}
+              <a className="text-indigo-600 font-semibold underline" href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+            </p>
+          )}
+
+          {!SITE.contactEmail ? (
+            <p className="p-4 text-sm bg-amber-50 border border-amber-200 rounded-xl text-amber-800">
+              {isRtl ? "البريد الإلكتروني للتواصل غير مضبوط بعد." : "The contact email has not been configured yet."}
+            </p>
+          ) : success ? (
             <div className="p-6 text-center text-emerald-800 bg-emerald-50 border border-emerald-100 rounded-2xl">
               <Check className="w-10 h-10 text-emerald-600 mx-auto mb-3 animate-ping" />
-              <p className="font-bold text-lg">{isRtl ? "تم إرسال رسالتك بنجاح!" : "Message dispatched successfully!"}</p>
+              <p className="font-bold text-lg">{isRtl ? "تم فتح تطبيق البريد لديك" : "Your email app should now be open"}</p>
               <p className="text-xs text-slate-500 mt-2">
                 {isRtl 
-                  ? "شكراً لك لتواصلك معنا. سنقوم بمراجعة طلبك والرد على بريدك الإلكتروني في أقرب مهلة زمنية ممكنا." 
-                  : "Thank you for reaching out. Our team will review your message and reply back shortly."}
+                  ? "اضغط إرسال في تطبيق البريد لإتمام الرسالة. يمكنك أيضاً مراسلتنا مباشرة على البريد الموضح في الأعلى."
+                  : "Press send in your email app to complete the message. You can also write to us directly at the address shown above."}
               </p>
             </div>
           ) : (
@@ -278,7 +319,7 @@ export default function Legal({ pageType, isRtl, onNavigate }: LegalProps) {
                   className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md flex items-center justify-center gap-2 transition-all w-full md:w-auto cursor-pointer"
                 >
                   <Send className="w-4 h-4 text-emerald-200" />
-                  <span>{isRtl ? "إرسال الرسالة الإلكترونية" : "Send Mail Message"}</span>
+                  <span>{isRtl ? "إرسال عبر البريد" : "Send via email"}</span>
                 </button>
               </div>
             </form>

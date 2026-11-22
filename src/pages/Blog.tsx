@@ -11,6 +11,7 @@ import {
 
 import { BLOG_ARTICLES } from "../data/blogData";
 import AdSpace from "../components/AdSpace";
+import { setSeo } from "../utils/seo";
 
 interface BlogProps {
   articleSlug?: string;
@@ -29,73 +30,13 @@ export default function Blog({
   );
 
   useEffect(() => {
-
-    if (activeArticle) {
-
-      const title = isRtl
-        ? activeArticle.title
-        : activeArticle.titleEn;
-
-      const description = isRtl
-        ? activeArticle.summary
-        : activeArticle.summaryEn;
-
-      document.title = title + " | JobTools";
-
-      let metaDescription = document.querySelector(
-        'meta[name="description"]'
-      );
-
-      if (!metaDescription) {
-        metaDescription = document.createElement("meta");
-        metaDescription.setAttribute("name", "description");
-        document.head.appendChild(metaDescription);
-      }
-
-      metaDescription.setAttribute(
-        "content",
-        description
-      );
-
-          console.log(metaDescription);
-      let ogTitle = document.querySelector(
-        'meta[property="og:title"]'
-      );
-
-      if (!ogTitle) {
-        ogTitle = document.createElement("meta");
-        ogTitle.setAttribute("property", "og:title");
-        document.head.appendChild(ogTitle);
-      }
-
-      ogTitle.setAttribute("content", title);
-
-      let ogDescription = document.querySelector(
-        'meta[property="og:description"]'
-      );
-
-      if (!ogDescription) {
-        ogDescription = document.createElement("meta");
-        ogDescription.setAttribute(
-          "property",
-          "og:description"
-        );
-        document.head.appendChild(ogDescription);
-      }
-
-      ogDescription.setAttribute(
-        "content",
-        description
-      );
-
-    } else {
-
-      document.title = isRtl
-        ? "مدونة السير الذاتية والأوصاف الوظيفية | JobTools"
-        : "Career & Resume Blog | JobTools";
-
-    }
-
+    if (!activeArticle) return; // صفحة /blog نفسها يضبطها App
+    setSeo({
+      title: (isRtl ? activeArticle.title : activeArticle.titleEn) + " | " + (isRtl ? "أدوات الوظائف" : "JobTools"),
+      description: isRtl ? activeArticle.summary : activeArticle.summaryEn,
+      path: `/blog/${activeArticle.slug}`,
+      lang: isRtl ? "ar" : "en",
+    });
   }, [activeArticle, isRtl]);
 
   if (activeArticle) {
