@@ -200,7 +200,7 @@ export default function App() {
 
       {/* Main core canvas layout */}
       <main className="flex-grow">
-        <Suspense fallback={<div className="py-24 text-center text-sm text-slate-400">...</div>}>
+        <Suspense fallback={<div className="py-24 text-center text-sm text-slate-500" style={{ minHeight: "100vh" }}>...</div>}>
           {renderActivePage()}
         </Suspense>
       </main>

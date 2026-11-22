@@ -533,10 +533,10 @@ ${cv.certifications.join(" - ")}
             </div>
             
             <div className="flex items-center justify-between mb-3 relative z-10">
-              <h3 className="font-extrabold text-indigo-900 text-sm md:text-base flex items-center gap-2">
+              <h2 className="font-extrabold text-indigo-900 text-sm md:text-base flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-indigo-600 animate-pulse" />
                 AI LinkedIn Profile Auto-Fill
-              </h3>
+              </h2>
               <button
                 type="button"
                 onClick={() => setShowLinkedInPanel(!showLinkedInPanel)}
@@ -775,7 +775,7 @@ ${cv.certifications.join(" - ")}
               <button
                 type="button"
                 onClick={addExperience}
-                className="px-2.5 py-1 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 rounded-md transition-all flex items-center gap-1 cursor-pointer"
+                className="px-2.5 py-1 text-xs font-bold text-white bg-sky-700 hover:bg-sky-800 rounded-md transition-all flex items-center gap-1 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add Work Role
@@ -868,7 +868,7 @@ ${cv.certifications.join(" - ")}
               <button
                 type="button"
                 onClick={addEducation}
-                className="px-2.5 py-1 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 rounded-md transition-all flex items-center gap-1 cursor-pointer"
+                className="px-2.5 py-1 text-xs font-bold text-white bg-sky-700 hover:bg-sky-800 rounded-md transition-all flex items-center gap-1 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add Education
@@ -1043,7 +1043,7 @@ ${cv.certifications.join(" - ")}
             <button
               type="button"
               onClick={() => { setIsGenerated(true); window.scrollTo({ top: 400, behavior: "smooth" }); }}
-              className="w-full py-4 text-center font-bold text-white bg-sky-600 hover:bg-sky-700 rounded-xl shadow-lg transition-all text-base cursor-pointer"
+              className="w-full py-4 text-center font-bold text-white bg-sky-700 hover:bg-sky-800 rounded-xl shadow-lg transition-all text-base cursor-pointer"
             >
               Generate and Preview English CV
             </button>
