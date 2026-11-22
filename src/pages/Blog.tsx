@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { BLOG_ARTICLES } from "../data/blogData";
+import { hasEnglish } from "../seo/routes";
 import AdSpace from "../components/AdSpace";
 import { setSeo, setJsonLd } from "../utils/seo";
 import { SITE } from "../config/site";
@@ -33,6 +34,11 @@ export default function Blog({
   onNavigate,
 }: BlogProps) {
 
+  const articlePath = (slug: string) => {
+    const a = BLOG_ARTICLES.find((x) => x.slug === slug);
+    return (!isRtl && a && hasEnglish(a) ? "/en/blog/" : "/blog/") + slug;
+  };
+
   const sortedArticles = [...BLOG_ARTICLES].sort((a, b) => b.date.localeCompare(a.date));
 
   const activeArticle = BLOG_ARTICLES.find(
@@ -44,11 +50,11 @@ export default function Blog({
     setSeo({
       title: (isRtl ? activeArticle.title : activeArticle.titleEn) + " | " + (isRtl ? "أدوات الوظائف" : "JobTools"),
       description: isRtl ? activeArticle.summary : activeArticle.summaryEn,
-      path: `/blog/${activeArticle.slug}`,
+      path: `${isRtl ? "" : "/en"}/blog/${activeArticle.slug}`,
       lang: isRtl ? "ar" : "en",
       type: "article",
     });
-    setJsonLd(articleJsonLd(activeArticle, SITE.url, "أدوات الوظائف", SITE.url + "/og-image.png"));
+    setJsonLd(articleJsonLd(activeArticle, SITE.url, "أدوات الوظائف", SITE.url + "/og-image.png", isRtl ? "ar" : "en"));
     return () => setJsonLd(null);
   }, [activeArticle, isRtl]);
 
@@ -188,8 +194,8 @@ export default function Blog({
             {related.map((r) => (
               <a
                 key={r.slug}
-                href={"/blog/" + r.slug}
-                onClick={(e) => { e.preventDefault(); onNavigate("/blog/" + r.slug); window.scrollTo(0, 0); }}
+                href={articlePath(r.slug)}
+                onClick={(e) => { e.preventDefault(); onNavigate(articlePath(r.slug)); window.scrollTo(0, 0); }}
                 className="block bg-white border border-slate-200 rounded-2xl p-4 hover:shadow-md transition-all"
               >
                 <span className="text-[11px] text-sky-600">{isRtl ? r.category : r.categoryEn}</span>
@@ -278,12 +284,10 @@ export default function Blog({
                 <h2 className="font-extrabold text-slate-800 text-base mb-2">
 
                   <a
-                    href={"/blog/" + article.slug}
+                    href={articlePath(article.slug)}
                     onClick={(e) => {
                       e.preventDefault();
-                      onNavigate(
-                        "/blog/" + article.slug
-                      );
+                      onNavigate(articlePath(article.slug));
                     }}
                   >
                     {title}
@@ -311,9 +315,7 @@ export default function Blog({
 
                 <button
                   onClick={() =>
-                    onNavigate(
-                      "/blog/" + article.slug
-                    )
+                    onNavigate(articlePath(article.slug))
                   }
                   className="flex items-center gap-1 hover:underline cursor-pointer"
                 >

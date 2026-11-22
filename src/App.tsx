@@ -2,10 +2,11 @@ import { Suspense, lazy, useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import GlobalAds from "./components/GlobalAds";
+import CookieConsent from "./components/CookieConsent";
 import Home from "./pages/Home";
 import { CVData, JobDescInput } from "./types";
 import { AlertCircle } from "lucide-react";
-import { getAllRoutes, NOT_FOUND_META, STATIC_ROUTES } from "./seo/routes";
+import { NOT_FOUND_META, STATIC_ROUTES } from "./seo/staticRoutes";
 import { setSeo } from "./utils/seo";
 
 // تحميل كسول للصفحات الثقيلة (يقلّص حجم الحزمة الأولى بشكل كبير)
@@ -36,11 +37,10 @@ export default function App() {
   // عند أي تغيير في المسار: اتجاه اللغة + SEO + الرجوع لأعلى الصفحة
   useEffect(() => {
     const path = currentRoute;
-    if (path === "/tools/cv-generator-en") setIsRtl(false);
+    if (path === "/tools/cv-generator-en" || path.startsWith("/en/")) setIsRtl(false);
     else if (path === "/tools/cv-generator-ar") setIsRtl(true);
 
     const staticRoute = STATIC_ROUTES.find((r) => r.path === path);
-    const isKnown = getAllRoutes().some((r) => r.path === path);
     if (staticRoute) {
       setSeo({
         title: staticRoute.title,
@@ -48,8 +48,11 @@ export default function App() {
         path,
         lang: path === "/tools/cv-generator-en" ? "en" : "ar",
       });
-    } else if (!isKnown) {
-      setSeo({ ...NOT_FOUND_META, path, noindex: true });
+    } else {
+      // سجل المسارات الكامل (فيه نصوص المقالات) يُحمَّل عند الحاجة فقط حتى يبقى الملف الرئيسي خفيفاً
+      import("./seo/routes").then(({ getAllRoutes }) => {
+        if (!getAllRoutes().some((r) => r.path === path)) setSeo({ ...NOT_FOUND_META, path, noindex: true });
+      });
     }
     // المسارات الديناميكية (مقالات / نماذج) تضبط SEO داخل صفحاتها
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -116,6 +119,9 @@ export default function App() {
     }
 
     // 2. Dynamic Blog posts
+    if (path.startsWith("/en/blog/")) {
+      return <Blog articleSlug={path.replace("/en/blog/", "")} isRtl={false} onNavigate={handleNavigate} />;
+    }
     if (path.startsWith("/blog/")) {
       const slug = path.replace("/blog/", "");
       return <Blog articleSlug={slug} isRtl={isRtl} onNavigate={handleNavigate} />;
@@ -199,6 +205,7 @@ export default function App() {
         </Suspense>
       </main>
       <GlobalAds />
+      <CookieConsent isRtl={isRtl} onNavigate={handleNavigate} />
 
       {/* Universal footer links */}
       <Footer isRtl={isRtl} onNavigate={handleNavigate} />

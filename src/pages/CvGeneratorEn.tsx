@@ -8,9 +8,6 @@ import {
 import AdSpace from "../components/AdSpace";
 import { CVData } from "../types";
 import { RenderCvTemplate, TEMPLATES_LIST } from "../components/cv-templates/TemplateRegistry";
-import { exportPdf } from "../utils/export/exportPdf";
-import { exportWord } from "../utils/export/exportWord";
-import { exportTxt } from "../utils/export/exportTxt";
 
 const INITIAL_STATE: CVData = {
   fullName: "",
@@ -390,7 +387,7 @@ ${cv.certifications.join(" - ")}
   const downloadPdf = async () => {
     setIsDownloadingPdf(true);
     try {
-      await exportPdf(cv, false, selectedTemplate);
+      await (await import("../utils/export/exportPdf")).exportPdf(cv, false, selectedTemplate);
       triggerAlert("✨ Compiled and downloaded your true vector text PDF resume successfully!");
     } catch (error) {
       console.error("PDF generation error:", error);
@@ -403,7 +400,7 @@ ${cv.certifications.join(" - ")}
   const downloadWord = async () => {
     setIsDownloadingWord(true);
     try {
-      await exportWord(cv, false);
+      await (await import("../utils/export/exportWord")).exportWord(cv, false);
       triggerAlert("📊 CV converted and downloaded as an editable Word Document (.docx) successfully!");
     } catch (error) {
       console.error("Word export error:", error);
@@ -416,7 +413,7 @@ ${cv.certifications.join(" - ")}
   const downloadTxt = async () => {
     setIsDownloadingTxt(true);
     try {
-      await exportTxt(cv, false);
+      await (await import("../utils/export/exportTxt")).exportTxt(cv, false);
       triggerAlert("📝 Resume downloaded as TXT file successfully!");
     } catch (error) {
       console.error("TXT export error:", error);

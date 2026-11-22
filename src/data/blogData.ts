@@ -1,6 +1,8 @@
 import { BlogArticle } from "../types";
 
-export const BLOG_ARTICLES: BlogArticle[] = [
+import generated from "./generatedArticles.json";
+
+const BASE_ARTICLES: BlogArticle[] = [
   {
     id: "1",
     title: "كيف تكتب سيرة ذاتية احترافية تجذب الانتباه؟",
@@ -1657,4 +1659,15 @@ Improve your chances by:
 Real projects matter greatly.
   `
 }
+];
+
+/**
+ * المقالات = المقالات المكتوبة يدوياً + المقالات التي يضيفها الـ worker تلقائياً (generatedArticles.json).
+ * مقال مولَّد بنفس الـ slug يحلّ محل المقال القديم (نسخة موسّعة ومحدّثة).
+ */
+const GENERATED = generated as BlogArticle[];
+const generatedSlugs = new Set(GENERATED.map((a) => a.slug));
+export const BLOG_ARTICLES: BlogArticle[] = [
+  ...BASE_ARTICLES.filter((a) => !generatedSlugs.has(a.slug)),
+  ...GENERATED,
 ];

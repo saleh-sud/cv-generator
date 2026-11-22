@@ -51,9 +51,19 @@ ${routes
 </urlset>
 `;
 fs.writeFileSync(path.join(DIST, "sitemap.xml"), sitemap);
+// فهرس sitemap إضافي، وملف مفتاح IndexNow (لـ Bing / Yandex)
+fs.writeFileSync(
+  path.join(DIST, "sitemap-index.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>${SITE_URL}/sitemap.xml</loc><lastmod>${today}</lastmod></sitemap>
+</sitemapindex>
+`
+);
+if (config.indexNowKey) fs.writeFileSync(path.join(DIST, `${config.indexNowKey}.txt`), config.indexNowKey);
 fs.writeFileSync(
   path.join(DIST, "robots.txt"),
-  `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-index.xml\n`
 );
 
 // ---------- 2) prerender ----------
@@ -70,28 +80,30 @@ const jsonLd = (r) => {
       inLanguage: "ar",
     });
   if (r.article)
-    return articleJsonLd(r.article, SITE_URL, config.siteNameAr, SITE_URL + config.ogImage).map(ldScript).join("");
+    return articleJsonLd(r.article, SITE_URL, config.siteNameAr, SITE_URL + config.ogImage, r.articleLang).map(ldScript).join("");
   return "";
 };
-const allArticles = routes.filter((r) => r.article).map((r) => r.article);
+const allArticles = routes.filter((r) => r.article && r.articleLang === "ar").map((r) => r.article);
 
 /** محتوى المقال الكامل في HTML الثابت (يراه جوجل فوراً بدون JavaScript). */
-function articleBody(a) {
+function articleBody(a, lang = "ar") {
+  const en = lang === "en";
+  const base = en ? "/en/blog/" : "/blog/";
   const related = relatedArticles(allArticles, a)
-    .map((x) => `<li><a href="/blog/${x.slug}">${esc(x.title)}</a></li>`)
+    .map((x) => `<li><a href="${en && x.contentEn ? base : "/blog/"}${x.slug}">${esc(en ? x.titleEn : x.title)}</a></li>`)
     .join("");
   const sources = EXTERNAL_SOURCES.map(
-    (s) => `<li><a href="${s.url}" rel="noopener" target="_blank">${esc(s.label)}</a></li>`
+    (s) => `<li><a href="${s.url}" rel="noopener" target="_blank">${esc(en ? s.labelEn : s.label)}</a></li>`
   ).join("");
   return `<main style="max-width:760px;margin:40px auto;padding:0 16px;font-family:sans-serif;line-height:1.8">
-<nav aria-label="breadcrumb"><a href="/">${esc(config.siteNameAr)}</a> › <a href="/blog">المدونة</a></nav>
-<article><h1>${esc(a.title)}</h1><p><time datetime="${a.date}">${a.date}</time> · ${esc(a.readTime)} · ${esc(a.category)}</p>
-<p><strong>${esc(a.summary)}</strong></p>
-${blocksToHtml(parseArticle(a.content))}
-<p><a href="/tools/cv-generator-ar">أنشئ سيرتك الذاتية مجاناً الآن</a></p>
+<nav aria-label="breadcrumb"><a href="/">${esc(en ? config.siteNameEn : config.siteNameAr)}</a> › <a href="/blog">${en ? "Blog" : "المدونة"}</a></nav>
+<article><h1>${esc(en ? a.titleEn : a.title)}</h1><p><time datetime="${a.date}">${a.date}</time> · ${esc(en ? a.categoryEn : a.category)}</p>
+<p><strong>${esc(en ? a.summaryEn : a.summary)}</strong></p>
+${blocksToHtml(parseArticle(en ? a.contentEn : a.content))}
+<p><a href="${en ? "/tools/cv-generator-en" : "/tools/cv-generator-ar"}">${en ? "Build your CV for free" : "أنشئ سيرتك الذاتية مجاناً الآن"}</a></p>
 </article>
-<h2>مقالات ذات صلة</h2><ul>${related}</ul>
-<h2>مصادر مفيدة</h2><ul>${sources}</ul>
+<h2>${en ? "Related articles" : "مقالات ذات صلة"}</h2><ul>${related}</ul>
+<h2>${en ? "Useful resources" : "مصادر مفيدة"}</h2><ul>${sources}</ul>
 </main>`;
 }
 
@@ -101,7 +113,10 @@ function render(r, { noindex = false } = {}) {
   const head = `<title>${esc(r.title)}</title>
     <meta name="description" content="${esc(r.description)}" />
     <meta name="robots" content="${noindex ? "noindex, nofollow" : "index, follow"}" />
-    <link rel="canonical" href="${esc(url)}" />
+    <link rel="canonical" href="${esc(url)}" />${r.alternates ? `
+    <link rel="alternate" hreflang="ar" href="${urlOf(r.alternates.ar)}" />
+    <link rel="alternate" hreflang="en" href="${urlOf(r.alternates.en)}" />
+    <link rel="alternate" hreflang="x-default" href="${urlOf(r.alternates.ar)}" />` : ""}
     <meta property="og:title" content="${esc(r.title)}" />
     <meta property="og:description" content="${esc(r.description)}" />
     <meta property="og:url" content="${esc(url)}" />
@@ -118,7 +133,7 @@ function render(r, { noindex = false } = {}) {
     .filter((x) => !x.noindex)
     .map((x) => `<li><a href="${x.path}">${esc(x.title)}</a></li>`)
     .join("");
-  const body = r.article ? articleBody(r.article) : `<main style="max-width:760px;margin:40px auto;padding:0 16px;font-family:sans-serif"><h1>${esc(
+  const body = r.article ? articleBody(r.article, r.articleLang) : `<main style="max-width:760px;margin:40px auto;padding:0 16px;font-family:sans-serif"><h1>${esc(
     r.title
   )}</h1><p>${esc(r.description)}</p><nav><ul>${links}</ul></nav></main>`;
 

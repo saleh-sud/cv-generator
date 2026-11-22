@@ -87,20 +87,21 @@ export const EXTERNAL_SOURCES: { label: string; labelEn: string; url: string }[]
   { label: "موقع بيت.كوم للوظائف في الخليج", labelEn: "Bayt.com Jobs", url: "https://www.bayt.com/" },
 ];
 
-export function articleJsonLd(a: BlogArticle, siteUrl: string, siteName: string, image: string) {
-  const url = `${siteUrl}/blog/${a.slug}`;
+export function articleJsonLd(a: BlogArticle, siteUrl: string, siteName: string, image: string, lang: "ar" | "en" = "ar") {
+  const en = lang === "en";
+  const url = `${siteUrl}${en ? "/en" : ""}/blog/${a.slug}`;
   return [
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      headline: a.title,
-      alternativeHeadline: a.titleEn,
-      description: a.summary,
-      inLanguage: "ar",
+      headline: en ? a.titleEn : a.title,
+      alternativeHeadline: en ? a.title : a.titleEn,
+      description: en ? a.summaryEn : a.summary,
+      inLanguage: lang,
       datePublished: a.date,
       dateModified: a.date,
-      articleSection: a.category,
-      wordCount: wordCount(a.content),
+      articleSection: en ? a.categoryEn : a.category,
+      wordCount: wordCount(en ? a.contentEn : a.content),
       image,
       url,
       mainEntityOfPage: url,
@@ -112,8 +113,8 @@ export function articleJsonLd(a: BlogArticle, siteUrl: string, siteName: string,
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: siteName, item: `${siteUrl}/` },
-        { "@type": "ListItem", position: 2, name: "المدونة", item: `${siteUrl}/blog` },
-        { "@type": "ListItem", position: 3, name: a.title, item: url },
+        { "@type": "ListItem", position: 2, name: en ? "Blog" : "المدونة", item: `${siteUrl}/blog` },
+        { "@type": "ListItem", position: 3, name: en ? a.titleEn : a.title, item: url },
       ],
     },
   ];
