@@ -248,6 +248,7 @@ ${cv.skills.join(" - ")}
 
           {/* Ad Space Mid */}
           <AdSpace type="content" isRtl={isRtl} />
+          <AdSpace type="native" isRtl={isRtl} />
 
           {/* FAQ Accordion */}
           <div className="space-y-4">

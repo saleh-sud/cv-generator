@@ -360,6 +360,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
 
       {/* Ad Space Mid-Level */}
       <AdSpace type="content" isRtl={isRtl} />
+      <AdSpace type="native" isRtl={isRtl} />
 
       {/* Bento styled FAQs Section */}
       <section className="my-16" id="faq-section">

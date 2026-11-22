@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { AD_NETWORK_ORDER, ADS_CONFIG, AdSlotName } from "../config/ads";
 
 interface AdSpaceProps {
@@ -7,17 +8,37 @@ interface AdSpaceProps {
 
 const SIZE: Record<AdSlotName, { w: number; h: number }> = {
   top: { w: 728, h: 90 },
+  mobile: { w: 320, h: 100 },
   content: { w: 468, h: 60 },
   sidebar: { w: 300, h: 250 },
+  native: { w: 1000, h: 320 },
 };
+
+const MOBILE_QUERY = "(max-width: 767px)";
+
+/** على الشاشات الصغيرة يُستبدل البانر العلوي 728×90 ببانر الجوال. */
+function useSlot(type: AdSlotName): AdSlotName {
+  const [mobile, setMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(MOBILE_QUERY).matches
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const on = () => setMobile(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  return type === "top" && mobile ? "mobile" : type;
+}
 
 /**
  * مكوّن إعلانات واحد لكل المنصات (HilltopAds / A-ADS / Adsterra).
  * كل إعلان يُعرض داخل iframe معزول (sandbox) حتى لا تتعارض السكربتات مع بعضها
  * ولا يصل كود الإعلان إلى صفحة الموقع. الإعدادات في src/config/ads.ts
  */
-export default function AdSpace({ type, isRtl = true }: AdSpaceProps) {
+export default function AdSpace({ type: requested, isRtl = true }: AdSpaceProps) {
+  const type = useSlot(requested);
   const { w, h } = SIZE[type];
+  const fluid = type === "native";
   const active = AD_NETWORK_ORDER.filter((id) => ADS_CONFIG[id].enabled);
   const withCode = active.filter((id) => ADS_CONFIG[id].slots[type].trim());
 
@@ -44,11 +65,11 @@ export default function AdSpace({ type, isRtl = true }: AdSpaceProps) {
           title={`ad-${id}-${type}`}
           loading="lazy"
           scrolling="no"
-          width={w}
+          width={fluid ? "100%" : w}
           height={h}
-          style={{ border: 0, maxWidth: "100%" }}
+          style={{ border: 0, maxWidth: fluid ? w : "100%", width: fluid ? "100%" : undefined }}
           sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
-          srcDoc={`<!doctype html><html><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;overflow:hidden;background:transparent}</style></head><body>${ADS_CONFIG[id].slots[type]}</body></html>`}
+          srcDoc={`<!doctype html><html><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:transparent;text-align:center}</style></head><body>${ADS_CONFIG[id].slots[type]}</body></html>`}
         />
       ))}
     </div>

@@ -111,6 +111,7 @@ export default function Blog({
           </div>
 
           <AdSpace type="content" isRtl={isRtl} />
+          <AdSpace type="native" isRtl={isRtl} />
 
         </article>
 

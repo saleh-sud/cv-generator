@@ -1,0 +1,13 @@
+{
+  "projects": {},
+  "targets": {
+    "jobtools-cv-generator": {
+      "hosting": {
+        "cv-generator": [
+          "jobtools-cv-generator"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

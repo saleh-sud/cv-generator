@@ -218,6 +218,7 @@ ${skills.join(" - ")}
           </div>
 
           <AdSpace type="content" isRtl={isRtl} />
+          <AdSpace type="native" isRtl={isRtl} />
 
           {/* FAQs section */}
           <div className="space-y-4">
