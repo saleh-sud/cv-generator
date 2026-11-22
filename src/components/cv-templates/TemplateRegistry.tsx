@@ -22,7 +22,7 @@ export const TEMPLATES_LIST: TemplateSpec[] = [
     nameEn: "Modern Template",
     descAr: "تصميم عصري مع تدرجات لونية، مثالي لمجالات التقنية والتسويق والإبداع.",
     descEn: "Contemporary layout with subtle gradients, ideal for technology, marketing, and creative fields.",
-    iconBg: "bg-gradient-to-tr from-sky-400 to-indigo-600",
+    iconBg: "bg-gradient-to-tr from-sky-700 to-indigo-700",
     textColor: "text-indigo-600"
   },
   {
@@ -40,7 +40,7 @@ export const TEMPLATES_LIST: TemplateSpec[] = [
     nameEn: "ATS Friendly",
     descAr: "تصميم مبسط للغاية من عمود واحد لضمان مرور السيرة الذاتية بنجاح عبر أنظمة تصفية التوظيف.",
     descEn: "Highly optimized single-column design ensuring perfect parsing through applicant tracking software.",
-    iconBg: "bg-emerald-600",
+    iconBg: "bg-emerald-700",
     textColor: "text-emerald-600"
   },
   {

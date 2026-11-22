@@ -37,7 +37,7 @@ export default function SeoJobPage({ slug, isRtl, onNavigate, onLoadJobDataToBui
         <p className="text-slate-500 text-sm mt-2">تعذر العثور على بطاقة الوصف الوظيفي المطلوبة.</p>
         <button 
           onClick={() => onNavigate("/")}
-          className="mt-6 px-4 py-2 bg-emerald-600 text-white font-medium rounded-lg text-sm cursor-pointer"
+          className="mt-6 px-4 py-2 bg-emerald-700 text-white font-medium rounded-lg text-sm cursor-pointer"
         >
           العودة للرئيسية
         </button>
@@ -145,7 +145,7 @@ ${skills.join(" - ")}
                 </button>
                 <button
                   onClick={handleUseToGenerate}
-                  className="flex-1 sm:flex-initial px-3.5 py-1.5 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer shadow-xs shadow-emerald-600/10"
+                  className="flex-1 sm:flex-initial px-3.5 py-1.5 text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-black rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer shadow-xs shadow-emerald-600/10"
                 >
                   <FileEdit className="w-3.5 h-3.5 text-emerald-200" />
                   <span>{isRtl ? "تحميل في أداة التعديل" : "Edit as Template"}</span>

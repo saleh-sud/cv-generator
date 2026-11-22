@@ -316,7 +316,7 @@ export default function Legal({ pageType, isRtl, onNavigate }: LegalProps) {
               <div className="text-left md:text-right pt-2">
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md flex items-center justify-center gap-2 transition-all w-full md:w-auto cursor-pointer"
+                  className="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-md flex items-center justify-center gap-2 transition-all w-full md:w-auto cursor-pointer"
                 >
                   <Send className="w-4 h-4 text-emerald-200" />
                   <span>{isRtl ? "إرسال عبر البريد" : "Send via email"}</span>
