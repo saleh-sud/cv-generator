@@ -27,7 +27,7 @@ npm run build    # يبني dist/ + sitemap.xml + robots.txt + صفحات ثاب
 npm install -g firebase-tools
 firebase login
 firebase use <PROJECT_ID>
-firebase target:apply hosting cv-generator <SITE_ID>
+firebase target:apply hosting cv-generator jobtools-cv-generator
 npm run build
 firebase deploy --only hosting:cv-generator
 ```
