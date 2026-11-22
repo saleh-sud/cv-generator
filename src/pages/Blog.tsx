@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import {
   ArrowRight,
   ArrowLeft,
@@ -11,7 +11,15 @@ import {
 
 import { BLOG_ARTICLES } from "../data/blogData";
 import AdSpace from "../components/AdSpace";
-import { setSeo } from "../utils/seo";
+import { setSeo, setJsonLd } from "../utils/seo";
+import { SITE } from "../config/site";
+import {
+  parseArticle,
+  inlineHtml,
+  relatedArticles,
+  articleJsonLd,
+  EXTERNAL_SOURCES,
+} from "../seo/articleMarkup";
 
 interface BlogProps {
   articleSlug?: string;
@@ -25,6 +33,8 @@ export default function Blog({
   onNavigate,
 }: BlogProps) {
 
+  const sortedArticles = [...BLOG_ARTICLES].sort((a, b) => b.date.localeCompare(a.date));
+
   const activeArticle = BLOG_ARTICLES.find(
     (art) => art.slug === articleSlug
   );
@@ -36,7 +46,10 @@ export default function Blog({
       description: isRtl ? activeArticle.summary : activeArticle.summaryEn,
       path: `/blog/${activeArticle.slug}`,
       lang: isRtl ? "ar" : "en",
+      type: "article",
     });
+    setJsonLd(articleJsonLd(activeArticle, SITE.url, "أدوات الوظائف", SITE.url + "/og-image.png"));
+    return () => setJsonLd(null);
   }, [activeArticle, isRtl]);
 
   if (activeArticle) {
@@ -52,6 +65,11 @@ export default function Blog({
     const category = isRtl
       ? activeArticle.category
       : activeArticle.categoryEn;
+
+    const blocks = parseArticle(content);
+    const headings = blocks.filter((b): b is Extract<typeof b, { type: "h2" }> => b.type === "h2");
+    const midAd = blocks.length > 6 ? Math.floor(blocks.length / 2) : -1;
+    const related = relatedArticles(BLOG_ARTICLES, activeArticle);
 
     return (
       <div
@@ -92,7 +110,7 @@ export default function Blog({
 
             <div className="flex items-center gap-1">
               <Calendar className="w-4 h-4" />
-              <span>{activeArticle.date}</span>
+              <time dateTime={activeArticle.date}>{activeArticle.date}</time>
             </div>
 
             <div className="flex items-center gap-1">
@@ -104,16 +122,82 @@ export default function Blog({
 
           <AdSpace type="top" isRtl={isRtl} />
 
-          <div className="prose prose-slate max-w-none">
-            <p className="text-slate-700 leading-relaxed whitespace-pre-line">
-              {content}
-            </p>
+          <p className="text-slate-800 font-semibold leading-relaxed mb-6">
+            {isRtl ? activeArticle.summary : activeArticle.summaryEn}
+          </p>
+
+          {headings.length > 2 && (
+            <nav className="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-sm">
+              <p className="font-bold text-slate-700 mb-2">{isRtl ? "محتويات المقال" : "Contents"}</p>
+              <ol className="space-y-1 text-sky-700">
+                {headings.map((h) => (
+                  <li key={h.id}><a href={`#${h.id}`} className="hover:underline">{h.text}</a></li>
+                ))}
+              </ol>
+            </nav>
+          )}
+
+          <div className="text-slate-700 leading-loose">
+            {blocks.map((b, i) => (
+              <div key={i}>
+                {b.type === "h2" ? (
+                  <h2 id={b.id} className="text-xl md:text-2xl font-extrabold text-slate-900 mt-8 mb-3 scroll-mt-24">{b.text}</h2>
+                ) : b.type === "ul" ? (
+                  <ul className="list-disc ps-6 space-y-1.5 my-3">
+                    {b.items.map((it, j) => <li key={j} dangerouslySetInnerHTML={{ __html: inlineHtml(it) }} />)}
+                  </ul>
+                ) : (
+                  <p className="my-3" dangerouslySetInnerHTML={{ __html: inlineHtml(b.text) }} />
+                )}
+                {i === midAd && <AdSpace type="sidebar" isRtl={isRtl} />}
+              </div>
+            ))}
           </div>
 
           <AdSpace type="content" isRtl={isRtl} />
-          <AdSpace type="native" isRtl={isRtl} />
+
+          <div className="mt-8 rounded-2xl bg-gradient-to-l from-sky-600 to-blue-700 text-white p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="font-bold">{isRtl ? "جاهز تطبّق النصائح؟ أنشئ سيرتك الذاتية المتوافقة مع ATS مجاناً." : "Ready to apply these tips? Build your ATS-friendly CV for free."}</p>
+            <a
+              href={isRtl ? "/tools/cv-generator-ar" : "/tools/cv-generator-en"}
+              onClick={(e) => { e.preventDefault(); onNavigate(isRtl ? "/tools/cv-generator-ar" : "/tools/cv-generator-en"); }}
+              className="bg-white text-blue-700 font-extrabold text-sm px-5 py-2.5 rounded-xl whitespace-nowrap"
+            >
+              {isRtl ? "ابدأ الآن مجاناً" : "Start free"}
+            </a>
+          </div>
+
+          <section className="mt-8">
+            <h2 className="text-lg font-extrabold text-slate-900 mb-3">{isRtl ? "مصادر مفيدة" : "Useful resources"}</h2>
+            <ul className="list-disc ps-6 space-y-1 text-sm text-sky-700">
+              {EXTERNAL_SOURCES.map((src) => (
+                <li key={src.url}>
+                  <a href={src.url} target="_blank" rel="noopener" className="hover:underline">{isRtl ? src.label : src.labelEn}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
 
         </article>
+
+        <AdSpace type="native" isRtl={isRtl} />
+
+        <section className="mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-4">{isRtl ? "مقالات ذات صلة" : "Related articles"}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {related.map((r) => (
+              <a
+                key={r.slug}
+                href={"/blog/" + r.slug}
+                onClick={(e) => { e.preventDefault(); onNavigate("/blog/" + r.slug); window.scrollTo(0, 0); }}
+                className="block bg-white border border-slate-200 rounded-2xl p-4 hover:shadow-md transition-all"
+              >
+                <span className="text-[11px] text-sky-600">{isRtl ? r.category : r.categoryEn}</span>
+                <p className="font-bold text-slate-800 text-sm mt-1">{isRtl ? r.title : r.titleEn}</p>
+              </a>
+            ))}
+          </div>
+        </section>
 
       </div>
     );
@@ -154,7 +238,7 @@ export default function Blog({
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-        {BLOG_ARTICLES.map((article) => {
+        {sortedArticles.map((article, index) => {
 
           const title = isRtl
             ? article.title
@@ -169,9 +253,13 @@ export default function Blog({
             : article.categoryEn;
 
           return (
-
+            <Fragment key={article.id}>
+            {index > 0 && index % 6 === 0 && (
+              <div className="md:col-span-2 lg:col-span-3">
+                <AdSpace type={index % 12 === 0 ? "native" : "content"} isRtl={isRtl} />
+              </div>
+            )}
             <div
-              key={article.id}
               className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-md transition-all"
             >
 
@@ -187,7 +275,7 @@ export default function Blog({
 
                 </div>
 
-                <h3 className="font-extrabold text-slate-800 text-base mb-2">
+                <h2 className="font-extrabold text-slate-800 text-base mb-2">
 
                   <a
                     href={"/blog/" + article.slug}
@@ -201,7 +289,7 @@ export default function Blog({
                     {title}
                   </a>
 
-                </h3>
+                </h2>
 
                 <p className="text-xs text-slate-500 leading-relaxed mb-4">
                   {summary}
@@ -247,10 +335,14 @@ export default function Blog({
               </div>
 
             </div>
+            </Fragment>
           );
         })}
 
       </div>
+
+      <AdSpace type="content" isRtl={isRtl} />
+      <AdSpace type="native" isRtl={isRtl} />
 
     </div>
   );

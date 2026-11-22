@@ -26,7 +26,7 @@ await build({
   outfile: tmp,
   logLevel: "silent",
 });
-const { getAllRoutes, NOT_FOUND_META } = await import(`${pathToFileURL(tmp).href}?v=${Date.now()}`);
+const { getAllRoutes, NOT_FOUND_META, parseArticle, blocksToHtml, relatedArticles, articleJsonLd, EXTERNAL_SOURCES } = await import(`${pathToFileURL(tmp).href}?v=${Date.now()}`);
 fs.rmSync(tmp, { force: true });
 
 const routes = getAllRoutes();
@@ -58,17 +58,42 @@ fs.writeFileSync(
 
 // ---------- 2) prerender ----------
 const template = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
-const jsonLd = (r) =>
-  r.path === "/"
-    ? `<script type="application/ld+json">${JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: config.siteNameAr,
-        alternateName: config.siteNameEn,
-        url: `${SITE_URL}/`,
-        inLanguage: "ar",
-      })}</script>`
-    : "";
+const ldScript = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, "\\u003c")}</script>`;
+const jsonLd = (r) => {
+  if (r.path === "/")
+    return ldScript({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: config.siteNameAr,
+      alternateName: config.siteNameEn,
+      url: `${SITE_URL}/`,
+      inLanguage: "ar",
+    });
+  if (r.article)
+    return articleJsonLd(r.article, SITE_URL, config.siteNameAr, SITE_URL + config.ogImage).map(ldScript).join("");
+  return "";
+};
+const allArticles = routes.filter((r) => r.article).map((r) => r.article);
+
+/** محتوى المقال الكامل في HTML الثابت (يراه جوجل فوراً بدون JavaScript). */
+function articleBody(a) {
+  const related = relatedArticles(allArticles, a)
+    .map((x) => `<li><a href="/blog/${x.slug}">${esc(x.title)}</a></li>`)
+    .join("");
+  const sources = EXTERNAL_SOURCES.map(
+    (s) => `<li><a href="${s.url}" rel="noopener" target="_blank">${esc(s.label)}</a></li>`
+  ).join("");
+  return `<main style="max-width:760px;margin:40px auto;padding:0 16px;font-family:sans-serif;line-height:1.8">
+<nav aria-label="breadcrumb"><a href="/">${esc(config.siteNameAr)}</a> › <a href="/blog">المدونة</a></nav>
+<article><h1>${esc(a.title)}</h1><p><time datetime="${a.date}">${a.date}</time> · ${esc(a.readTime)} · ${esc(a.category)}</p>
+<p><strong>${esc(a.summary)}</strong></p>
+${blocksToHtml(parseArticle(a.content))}
+<p><a href="/tools/cv-generator-ar">أنشئ سيرتك الذاتية مجاناً الآن</a></p>
+</article>
+<h2>مقالات ذات صلة</h2><ul>${related}</ul>
+<h2>مصادر مفيدة</h2><ul>${sources}</ul>
+</main>`;
+}
 
 function render(r, { noindex = false } = {}) {
   const url = urlOf(r.path);
@@ -80,7 +105,8 @@ function render(r, { noindex = false } = {}) {
     <meta property="og:title" content="${esc(r.title)}" />
     <meta property="og:description" content="${esc(r.description)}" />
     <meta property="og:url" content="${esc(url)}" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="${r.article ? "article" : "website"}" />${r.article ? `
+    <meta property="article:published_time" content="${r.article.date}" />` : ""}
     <meta property="og:locale" content="${r.lang === "en" ? "en_US" : "ar_AR"}" />
     <meta property="og:image" content="${esc(image)}" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -92,7 +118,7 @@ function render(r, { noindex = false } = {}) {
     .filter((x) => !x.noindex)
     .map((x) => `<li><a href="${x.path}">${esc(x.title)}</a></li>`)
     .join("");
-  const body = `<main style="max-width:760px;margin:40px auto;padding:0 16px;font-family:sans-serif"><h1>${esc(
+  const body = r.article ? articleBody(r.article) : `<main style="max-width:760px;margin:40px auto;padding:0 16px;font-family:sans-serif"><h1>${esc(
     r.title
   )}</h1><p>${esc(r.description)}</p><nav><ul>${links}</ul></nav></main>`;
 

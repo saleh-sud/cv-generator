@@ -1,5 +1,7 @@
 import { BLOG_ARTICLES } from "../data/blogData";
 import { SEO_CV_TEMPLATES, SEO_JOB_TEMPLATES } from "../data/seoTemplates";
+import type { BlogArticle } from "../types";
+export { parseArticle, blocksToHtml, relatedArticles, articleJsonLd, EXTERNAL_SOURCES } from "./articleMarkup";
 
 /** سجلّ المسارات الوحيد: يستخدمه التطبيق، وسكربت الـ sitemap، وسكربت الـ prerender. */
 export interface RouteMeta {
@@ -11,6 +13,8 @@ export interface RouteMeta {
   changefreq: "daily" | "weekly" | "monthly";
   priority: string;
   noindex?: boolean;
+  /** للمقالات: يُستخدم لتوليد المحتوى الكامل وبيانات BlogPosting في HTML الثابت */
+  article?: BlogArticle;
 }
 
 const SITE_AR = "أدوات الوظائف";
@@ -92,7 +96,7 @@ export const STATIC_ROUTES: RouteMeta[] = [
 
 export function getAllRoutes(): RouteMeta[] {
   const routes: RouteMeta[] = [...STATIC_ROUTES];
-  for (const a of BLOG_ARTICLES) {
+  for (const a of [...BLOG_ARTICLES].sort((x, y) => y.date.localeCompare(x.date))) {
     routes.push({
       path: `/blog/${a.slug}`,
       lang: "ar",
@@ -101,6 +105,7 @@ export function getAllRoutes(): RouteMeta[] {
       lastmod: a.date,
       changefreq: "monthly",
       priority: "0.8",
+      article: a,
     });
   }
   for (const t of SEO_CV_TEMPLATES) {
