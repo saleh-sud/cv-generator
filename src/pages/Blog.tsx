@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   ArrowRight,
   ArrowLeft,
@@ -10,6 +10,10 @@ import {
 } from "lucide-react";
 
 import { BLOG_ARTICLES } from "../data/blogData";
+import type { BlogArticle } from "../types";
+
+// كل مقال مولَّد في ملف مستقل يُحمَّل عند فتحه فقط
+const ARTICLE_FILES = import.meta.glob<{ default: Partial<BlogArticle> }>("../content/articles/*.json");
 import { hasEnglish } from "../seo/routes";
 import AdSpace from "../components/AdSpace";
 import { setSeo, setJsonLd } from "../utils/seo";
@@ -39,11 +43,22 @@ export default function Blog({
     return (!isRtl && a && hasEnglish(a) ? "/en/blog/" : "/blog/") + slug;
   };
 
+  const PAGE = 24;
+  const [visible, setVisible] = useState(PAGE);
+
   const sortedArticles = [...BLOG_ARTICLES].sort((a, b) => b.date.localeCompare(a.date));
 
-  const activeArticle = BLOG_ARTICLES.find(
+  const meta = BLOG_ARTICLES.find(
     (art) => art.slug === articleSlug
   );
+  const [loaded, setLoaded] = useState<Record<string, BlogArticle>>({});
+  const activeArticle = meta?.lazy ? loaded[meta.slug] : meta;
+
+  useEffect(() => {
+    if (!meta?.lazy || loaded[meta.slug]) return;
+    const load = ARTICLE_FILES[`../content/articles/${meta.slug}.json`];
+    load?.().then((m) => setLoaded((prev) => ({ ...prev, [meta.slug]: { ...meta, ...m.default } })));
+  }, [meta, loaded]);
 
   useEffect(() => {
     if (!activeArticle) return; // صفحة /blog نفسها يضبطها App
@@ -57,6 +72,14 @@ export default function Blog({
     setJsonLd(articleJsonLd(activeArticle, SITE.url, "أدوات الوظائف", SITE.url + "/og-image.png", isRtl ? "ar" : "en"));
     return () => setJsonLd(null);
   }, [activeArticle, isRtl]);
+
+  if (meta?.lazy && !activeArticle) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-20 text-center text-slate-400 text-sm">
+        {isRtl ? "جارٍ تحميل المقال..." : "Loading article..."}
+      </div>
+    );
+  }
 
   if (activeArticle) {
 
@@ -244,7 +267,7 @@ export default function Blog({
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-        {sortedArticles.map((article, index) => {
+        {sortedArticles.slice(0, visible).map((article, index) => {
 
           const title = isRtl
             ? article.title
@@ -342,6 +365,17 @@ export default function Blog({
         })}
 
       </div>
+
+      {visible < sortedArticles.length && (
+        <div className="text-center mt-10">
+          <button
+            onClick={() => setVisible((v) => v + PAGE)}
+            className="px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm cursor-pointer"
+          >
+            {isRtl ? "عرض المزيد من المقالات" : "Show more articles"}
+          </button>
+        </div>
+      )}
 
       <AdSpace type="content" isRtl={isRtl} />
       <AdSpace type="native" isRtl={isRtl} />

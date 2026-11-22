@@ -29,7 +29,13 @@ await build({
 const { getAllRoutes, NOT_FOUND_META, parseArticle, blocksToHtml, relatedArticles, articleJsonLd, EXTERNAL_SOURCES } = await import(`${pathToFileURL(tmp).href}?v=${Date.now()}`);
 fs.rmSync(tmp, { force: true });
 
-const routes = getAllRoutes();
+// المقالات المولَّدة: نصها الكامل في src/content/articles/<slug>.json
+const routes = getAllRoutes().map((r) => {
+  if (!r.article?.lazy) return r;
+  const file = path.join(ROOT, "src/content/articles", `${r.article.slug}.json`);
+  const full = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : {};
+  return { ...r, article: { ...r.article, ...full } };
+});
 const esc = (v) =>
   String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const urlOf = (p) => (p === "/" ? `${SITE_URL}/` : `${SITE_URL}${p}`);
@@ -129,8 +135,11 @@ function render(r, { noindex = false } = {}) {
     <meta name="twitter:description" content="${esc(r.description)}" />
     <meta name="twitter:image" content="${esc(image)}" />
     ${jsonLd(r)}`;
-  const links = routes
-    .filter((x) => !x.noindex)
+  // روابط الصفحات العامة + أحدث 40 مقالاً فقط (حتى لا يكبر كل ملف HTML مع زيادة المقالات)
+  const links = [
+    ...routes.filter((x) => !x.article && !x.noindex),
+    ...routes.filter((x) => x.article && x.articleLang === "ar").slice(0, 40),
+  ]
     .map((x) => `<li><a href="${x.path}">${esc(x.title)}</a></li>`)
     .join("");
   const body = r.article ? articleBody(r.article, r.articleLang) : `<main style="max-width:760px;margin:40px auto;padding:0 16px;font-family:sans-serif"><h1>${esc(

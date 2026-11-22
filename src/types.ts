@@ -60,6 +60,10 @@ export interface BlogArticle {
   titleEn: string;
   summaryEn: string;
   contentEn: string;
+  /** مقال مولَّد: نصّه في src/content/articles/<slug>.json ويُحمَّل عند فتح المقال فقط */
+  lazy?: boolean;
+  /** هل للمقال نسخة إنجليزية كاملة؟ (للمقالات lazy) */
+  hasEn?: boolean;
 }
 
 export interface SeoCvTemplate {

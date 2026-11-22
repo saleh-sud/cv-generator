@@ -6,7 +6,7 @@ export { STATIC_ROUTES, NOT_FOUND_META, type RouteMeta } from "./staticRoutes";
 export { parseArticle, blocksToHtml, relatedArticles, articleJsonLd, EXTERNAL_SOURCES } from "./articleMarkup";
 
 /** للمقال نسخة إنجليزية كافية لصفحة مستقلة؟ */
-export const hasEnglish = (a: BlogArticle) => (a.contentEn || "").split(/\s+/).length >= 120;
+export const hasEnglish = (a: BlogArticle) => (a.lazy ? !!a.hasEn : (a.contentEn || "").split(/\s+/).length >= 120);
 
 export function getAllRoutes(): RouteMeta[] {
   const routes: RouteMeta[] = [...STATIC_ROUTES];

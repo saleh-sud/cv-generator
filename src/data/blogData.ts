@@ -1662,10 +1662,17 @@ Real projects matter greatly.
 ];
 
 /**
- * المقالات = المقالات المكتوبة يدوياً + المقالات التي يضيفها الـ worker تلقائياً (generatedArticles.json).
+ * المقالات = المقالات المكتوبة يدوياً + المقالات التي يضيفها الـ worker تلقائياً.
+ * generatedArticles.json فيه البيانات الوصفية فقط (العنوان، الوصف، التاريخ...)، أما النص الكامل
+ * ففي src/content/articles/<slug>.json ويُحمَّل عند فتح المقال، حتى يبقى الموقع سريعاً مهما كثرت المقالات.
  * مقال مولَّد بنفس الـ slug يحلّ محل المقال القديم (نسخة موسّعة ومحدّثة).
  */
-const GENERATED = generated as BlogArticle[];
+const GENERATED: BlogArticle[] = (generated as Omit<BlogArticle, "content" | "contentEn">[]).map((a) => ({
+  ...a,
+  content: "",
+  contentEn: "",
+  lazy: true,
+}));
 const generatedSlugs = new Set(GENERATED.map((a) => a.slug));
 export const BLOG_ARTICLES: BlogArticle[] = [
   ...BASE_ARTICLES.filter((a) => !generatedSlugs.has(a.slug)),

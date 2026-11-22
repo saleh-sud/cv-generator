@@ -13,8 +13,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const OUT = path.join(ROOT, "src/data/generatedArticles.json");
-const TOPICS = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/article-topics.json"), "utf8"));
+const OUT = path.join(ROOT, "src/data/generatedArticles.json"); // البيانات الوصفية فقط
+const CONTENT_DIR = path.join(ROOT, "src/content/articles"); // النص الكامل لكل مقال
+const TOPICS_FILE = path.join(ROOT, "scripts/article-topics.json");
+const TOPICS = JSON.parse(fs.readFileSync(TOPICS_FILE, "utf8"));
+fs.mkdirSync(CONTENT_DIR, { recursive: true });
 const ENDPOINT = process.env.LLM_ENDPOINT || "https://text.pollinations.ai/openai";
 const MODELS = (process.env.LLM_MODELS || "openai").split(",");
 const MIN_WORDS = 850;
@@ -25,6 +28,9 @@ const COUNT = countArg > -1 ? Number(process.argv[countArg + 1]) || 1 : 1;
 
 const generated = JSON.parse(fs.readFileSync(OUT, "utf8"));
 const done = new Set(generated.map((a) => a.slug));
+// كل الـ slugs الموجودة في الموقع (القديمة + المولّدة + قائمة المواضيع) حتى لا يتكرر أي موضوع
+const allKnownSlugs = () =>
+  new Set([...done, ...TOPICS.new.map((t) => t.slug), ...TOPICS.expand, ...[...baseSrc.matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1])]);
 const words = (s) => String(s).split(/\s+/).filter(Boolean).length;
 
 // بيانات المقالات القديمة (لتوسيعها بدل كتابة موضوع مختلف)
@@ -39,6 +45,36 @@ function baseArticle(slug) {
     category: chunk.match(/category:\s*"([^"]+)"/)?.[1],
     categoryEn: chunk.match(/categoryEn:\s*"([^"]+)"/)?.[1],
   };
+}
+
+const slugify = (s) =>
+  String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 70);
+
+/** عندما تقترب قائمة المواضيع من النهاية: يقترح الذكاء الاصطناعي مواضيع جديدة غير مكررة ويضيفها للقائمة. */
+async function refillTopics() {
+  const remaining = TOPICS.new.filter((t) => !done.has(t.slug)).length;
+  if (remaining >= 5) return;
+  const known = allKnownSlugs();
+  const recent = [...known].slice(-250).join(", ");
+  const res = await chat([
+    { role: "system", content: "You are an SEO content strategist for an Arabic careers & CV website. Return JSON only." },
+    {
+      role: "user",
+      content: `Suggest 20 NEW article topics people in the Arab world search on Google about: CV/resume writing for specific jobs, job interviews, job hunting in specific Arab or foreign countries, cover letters, careers, workplace skills, salaries, remote work, freelancing.
+Each topic must be clearly different from these existing article slugs: ${recent}
+Return JSON: {"topics": [{"slug": "short-english-kebab-case-slug", "keyword": "عنوان الموضوع بالعربية كما يبحث عنه الناس"}]}`,
+    },
+  ]);
+  let added = 0;
+  for (const t of res.topics || []) {
+    const slug = slugify(t.slug);
+    if (!slug || known.has(slug) || !t.keyword) continue;
+    TOPICS.new.push({ slug, keyword: String(t.keyword).trim() });
+    known.add(slug);
+    added++;
+  }
+  fs.writeFileSync(TOPICS_FILE, JSON.stringify(TOPICS, null, 2) + "\n");
+  console.log(`🧠 أُضيف ${added} موضوع جديد إلى القائمة`);
 }
 
 function nextTask() {
@@ -163,6 +199,11 @@ const today = new Date().toISOString().slice(0, 10);
 const newUrls = [];
 
 for (let i = 0; i < COUNT; i++) {
+  try {
+    await refillTopics();
+  } catch (e) {
+    console.warn("تعذّر اقتراح مواضيع جديدة الآن:", String(e.message).slice(0, 120));
+  }
   const task = nextTask();
   if (!task) {
     console.log("لا توجد مواضيع متبقية في scripts/article-topics.json — أضف مواضيع جديدة.");
@@ -182,7 +223,7 @@ for (let i = 0; i < COUNT; i++) {
   console.log(`   الإنجليزي: ${words(en.contentEn)} كلمة`);
 
   const w = words(ar.content);
-  const article = {
+  const meta = {
     id: `g-${task.slug}`,
     slug: task.slug,
     title: String(ar.title).trim(),
@@ -193,10 +234,12 @@ for (let i = 0; i < COUNT; i++) {
     categoryEn: task.base?.categoryEn || en.categoryEn || "Career Tips",
     readTime: `${Math.max(4, Math.round(w / 200))} دقائق`,
     date: today,
-    content: ar.content.trim(),
-    contentEn: String(en.contentEn || "").trim(),
+    hasEn: words(en.contentEn || "") >= 120,
   };
-  generated.push(article);
+  const body = { content: ar.content.trim(), contentEn: String(en.contentEn || "").trim() };
+  fs.writeFileSync(path.join(CONTENT_DIR, `${task.slug}.json`), JSON.stringify(body, null, 2) + "\n");
+  const article = { ...meta, ...body };
+  generated.push(meta);
   done.add(task.slug);
   newUrls.push(`/blog/${task.slug}`);
   fs.writeFileSync(OUT, JSON.stringify(generated, null, 2) + "\n");
