@@ -27,4 +27,11 @@ const res = await fetch("https://api.indexnow.org/indexnow", {
   }),
 });
 console.log(`IndexNow: ${res.status} ${res.statusText} — ${urls.length} URL(s)`);
+// بعض الحالات ترفض الـ POST للقوائم القصيرة (422)؛ عندها نرسل كل رابط بطلب GET
+if (res.status === 422 && urls.length <= 50) {
+  for (const u of urls) {
+    const r = await fetch(`https://api.indexnow.org/indexnow?url=${encodeURIComponent(u)}&key=${config.indexNowKey}`);
+    console.log(`  ${r.status} ${u}`);
+  }
+}
 if (res.status >= 400 && res.status !== 422) process.exitCode = 1;

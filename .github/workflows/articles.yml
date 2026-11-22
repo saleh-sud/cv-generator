@@ -1,4 +1,4 @@
-# Worker المقالات: 3 مقالات يومياً (~1000 كلمة) عبر GitHub Models المجاني، ثم بناء ونشر على Firebase.
+# Worker المقالات: 3 مقالات يومياً (~1000 كلمة) عبر Pollinations.ai المجاني بدون مفتاح، ثم بناء ونشر على Firebase.
 name: Daily articles
 
 on:
@@ -14,7 +14,6 @@ on:
 
 permissions:
   contents: write
-  models: read
 
 concurrency:
   group: articles
@@ -26,19 +25,18 @@ jobs:
     env:
       HAS_FIREBASE: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JOBTOOLS_CV_GENERATOR != '' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - run: npm ci
 
       - name: Write article(s)
         id: gen
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        timeout-minutes: 45
         run: node scripts/generate-article.mjs --count "${{ github.event.inputs.count || '1' }}"
 
       - name: Build
