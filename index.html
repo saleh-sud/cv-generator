@@ -8,7 +8,7 @@
     <!-- HilltopAds: ownership verification + referrer policy they recommend for ad revenue -->
     <meta name="332a38836c6a4460cb04b63abe9a9fe6531e805d" content="332a38836c6a4460cb04b63abe9a9fe6531e805d" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <meta name="theme-color" content="#2563eb" />
+    <meta name="theme-color" content="#1d4ed8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate" type="application/rss+xml" title="مدونة أدوات الوظائف" href="/rss.xml" />
 
@@ -29,15 +29,29 @@
     <meta name="twitter:image" content="/og-image.png" />
     <!-- seo:end -->
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TXC65J1EZ2"></script>
+    <!-- Google Analytics + الإعلانات: تُحمَّل بعد أول تفاعل للزائر (أو بعد 20 ثانية) حتى تبقى الصفحة سريعة جداً -->
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
+      function gtag() { dataLayer.push(arguments); }
       gtag("js", new Date());
       gtag("config", "G-TXC65J1EZ2");
+      (function () {
+        var done = false;
+        function go() {
+          if (done) return;
+          done = true;
+          window.__tfInteracted = true;
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = "https://www.googletagmanager.com/gtag/js?id=G-TXC65J1EZ2";
+          document.head.appendChild(s);
+          window.dispatchEvent(new Event("tf:interact"));
+        }
+        ["scroll", "pointerdown", "keydown", "touchstart", "mousemove", "wheel"].forEach(function (e) {
+          addEventListener(e, go, { once: true, passive: true });
+        });
+        setTimeout(go, 20000);
+      })();
     </script>
   </head>
 

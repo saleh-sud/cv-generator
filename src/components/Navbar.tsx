@@ -119,6 +119,8 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isRtl ? "القائمة" : "Menu"}
+              aria-expanded={isOpen}
               className="p-2 rounded-lg text-slate-500 hover:text-sky-600 hover:bg-slate-50 focus:outline-hidden transition-all cursor-pointer"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { 
   FileText, Briefcase, FilePlus2, BadgeHelp, CheckCircle, 
   Sparkles, Shield, Eye, Flame, ChevronDown, ListCollapse, ArrowLeft, ArrowRight
@@ -91,10 +90,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
           <div className="relative z-10 my-2">
             
             {/* Elegant Pill Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+            <div
               className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full mb-6"
             >
               <Sparkles className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
@@ -103,7 +99,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
                   ? "#1 منصة توظيف عربية متميزة" 
                   : "#1 Advanced Professional Recruitment Suite"}
               </span>
-            </motion.div>
+            </div>
 
             {/* Title with Underlined decoration */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight mb-4">
@@ -162,9 +158,9 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
                 <Briefcase className="w-6 h-6 text-blue-400" />
               </div>
               
-              <h3 className="text-xl sm:text-2xl font-bold mb-2 text-white">
+              <h2 className="text-xl sm:text-2xl font-bold mb-2 text-white">
                 {isRtl ? "مولد الوصف الوظيفي" : "Job Spec Generator"}
-              </h3>
+              </h2>
               
               <p className="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">
                 {isRtl 
@@ -204,7 +200,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
             <div className="w-4/5 h-full bg-blue-500 rounded-full"></div>
           </div>
           
-          <p className="text-[10px] text-slate-400 mt-3 leading-relaxed">
+          <p className="text-[10px] text-slate-600 mt-3 leading-relaxed">
             {isRtl 
               ? "ثقة الكوادر والمحترفين العرب سر ديمومتنا مجاناً" 
               : "Trusted by thousands of young professionals worldwide"}
@@ -214,11 +210,11 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
         {/* Bento Card 4: Immersive Career Advisory Blog post (spans 6 cols on desktop) */}
         <div 
           onClick={() => onNavigate("/blog/how-to-bypass-ats-screening")}
-          className="md:col-span-12 lg:col-span-6 bg-blue-600 hover:bg-blue-700 rounded-3xl p-6 text-white flex flex-col justify-between relative overflow-hidden group shadow-md transition-all duration-300 cursor-pointer"
+          className="md:col-span-12 lg:col-span-6 bg-blue-700 hover:bg-blue-800 rounded-3xl p-6 text-white flex flex-col justify-between relative overflow-hidden group shadow-md transition-all duration-300 cursor-pointer"
         >
           <div className="relative z-10 flex flex-col h-full justify-between">
             <div>
-              <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-white/20 text-white px-2.5 py-1 rounded">
+              <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-black/25 text-white px-2.5 py-1 rounded">
                 {isRtl ? "نصائح المهنة والتوظيف" : "Career Growth Guide"}
               </span>
               <h3 className="text-xl sm:text-2xl font-extrabold mt-4 leading-snug text-white max-w-lg">
@@ -254,7 +250,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
           <div className="text-slate-800 font-bold text-base">
             {isRtl ? "خصوصية فدرالية ومحلية" : "100% Secure Local"}
           </div>
-          <p className="text-[11px] text-slate-400 mt-2 max-w-[200px] leading-relaxed">
+          <p className="text-[11px] text-slate-600 mt-2 max-w-[200px] leading-relaxed">
             {isRtl 
               ? "يتم معالجة وحفظ مدخلاتك الحساسة فقط في جهازك الشخصي" 
               : "Your data stays on your machine with absolute local safety"}
@@ -286,7 +282,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
                   {isRtl ? feat.descAr : feat.descEn}
                 </p>
               </div>
-              <div className="text-[10px] text-slate-400 font-mono flex items-center gap-1 border-t border-slate-50 pt-3">
+              <div className="text-[10px] text-slate-600 font-mono flex items-center gap-1 border-t border-slate-50 pt-3">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
                 <span>{isRtl ? "تم التحقق متصفحياً" : "Verified Safe Processing"}</span>
               </div>
@@ -305,7 +301,7 @@ export default function Home({ isRtl, onNavigate }: HomeProps) {
             <h2 className="text-xl md:text-2xl font-black text-slate-900 leading-tight">
               {isRtl ? "تصفح القوالب والنماذج الجاهزة" : "Popular Pre-Structured Templates & Profiles"}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1">
               {isRtl 
                 ? "انقر على أي نموذج للاطلاع السريع أو استيراده في دقيقة واختصار ساعات الصياغة" 
                 : "Explore highly rich, pre-packaged corporate listings you can load instantly into your workspace"}

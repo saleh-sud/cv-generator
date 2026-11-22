@@ -35,6 +35,7 @@ export default function CookieConsent({ isRtl, onNavigate }: { isRtl: boolean; o
       dir={isRtl ? "rtl" : "ltr"}
       className="fixed bottom-3 inset-x-3 md:inset-x-auto md:start-4 md:max-w-md z-[100000] bg-slate-900 text-white rounded-2xl shadow-2xl p-4 text-xs leading-relaxed"
       role="dialog"
+      aria-label={isRtl ? "موافقة ملفات تعريف الارتباط" : "Cookie consent"}
       aria-live="polite"
     >
       <p className="mb-3">
@@ -56,7 +57,7 @@ export default function CookieConsent({ isRtl, onNavigate }: { isRtl: boolean; o
         <button onClick={() => choose("essential")} className="px-3 py-1.5 rounded-lg border border-slate-600 hover:bg-slate-800 cursor-pointer">
           {isRtl ? "الضرورية فقط" : "Essential only"}
         </button>
-        <button onClick={() => choose("all")} className="px-3 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-600 font-bold cursor-pointer">
+        <button onClick={() => choose("all")} className="px-3 py-1.5 rounded-lg bg-sky-700 hover:bg-sky-800 font-bold cursor-pointer">
           {isRtl ? "موافق" : "Accept"}
         </button>
       </div>

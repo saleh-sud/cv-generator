@@ -124,7 +124,12 @@ fs.writeFileSync(
 );
 
 // ---------- 2) prerender ----------
-const template = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+let template = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+// CSS مضمّن في الصفحة (بدون طلب يعيق العرض => سرعة أعلى)
+{
+  const m = template.match(/<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/);
+  if (m) template = template.replace(m[0], () => `<style>${fs.readFileSync(path.join(DIST, m[1]), "utf8")}</style>`);
+}
 const ldScript = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, "\\u003c")}</script>`;
 const jsonLd = (r) => {
   if (r.path === "/")

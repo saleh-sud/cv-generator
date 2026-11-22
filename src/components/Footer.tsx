@@ -150,7 +150,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
         </div>
 
         {/* Outer banner message */}
-        <div className="mt-12 pt-8 border-t border-slate-850 text-center text-xs text-slate-500 leading-relaxed">
+        <div className="mt-12 pt-8 border-t border-slate-850 text-center text-xs text-slate-400 leading-relaxed">
           <p>
             {isRtl 
               ? "إخلاء مسؤولية: بيانات السيرة الذاتية التي تدخلها تُعالج وتُحفظ على متصفحك فقط (localStorage) ولا تُرفع إلى خوادمنا. يعرض الموقع إعلانات وتحليلات من أطراف ثالثة، راجع سياسة الخصوصية."
