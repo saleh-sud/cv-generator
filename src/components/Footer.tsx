@@ -144,6 +144,15 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
                   💡 {isRtl ? "مدونة النصائح المهنية والـ ATS" : "Career & ATS Advice Blog"}
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://techfix-ai.pages.dev/"
+                  className="hover:text-sky-400 text-sky-400 font-semibold transition-colors block text-right md:text-start text-xs"
+                  rel="noopener"
+                >
+                  🛠️ {isRtl ? "TechFix AI: حلول وشروحات تقنية" : "TechFix AI: tech fixes & guides"}
+                </a>
+              </li>
             </ul>
           </div>
 
