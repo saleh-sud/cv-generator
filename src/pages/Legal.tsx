@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { L } from "../utils/lang";
 import { SITE } from "../config/site";
 import { Mail, Shield, FileSpreadsheet, Info, Check, Send, Sparkles } from "lucide-react";
 
@@ -111,7 +112,7 @@ export default function Legal({ pageType, isRtl, onNavigate }: LegalProps) {
             </h3>
             <p>
               {isRtl ? "لأي استفسار حول الخصوصية، استخدم صفحة " : "For any privacy question, use the "}
-              <a href="/contact" onClick={(e) => { e.preventDefault(); onNavigate("/contact"); }} className="text-sky-600 underline">
+              <a href={L("/contact")} onClick={(e) => { e.preventDefault(); onNavigate("/contact"); }} className="text-sky-600 underline">
                 {isRtl ? "تواصل معنا" : "Contact page"}
               </a>
               {isRtl ? "." : "."}

@@ -86,4 +86,4 @@ jobs:
 
       - name: Ping IndexNow (Bing / Yandex)
         if: steps.act.outputs.published == 'true' && env.HAS_FIREBASE == 'true'
-        run: npm run indexnow -- "/blog/$SLUG" /blog
+        run: npm run indexnow -- "/blog/$SLUG" "/ar/blog/$SLUG" /blog /ar/blog

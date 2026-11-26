@@ -40,13 +40,20 @@ export default function Blog({
 
   const articlePath = (slug: string) => {
     const a = BLOG_ARTICLES.find((x) => x.slug === slug);
-    return (!isRtl && a && hasEnglish(a) ? "/en/blog/" : "/blog/") + slug;
+    // العربية تحت /ar، والإنجليزية على الرابط الأساسي (المقال بلا نسخة إنجليزية يفتح بالعربية)
+    return (isRtl || !a || !hasEnglish(a) ? "/ar/blog/" : "/blog/") + slug;
   };
+
+  // مدة القراءة مخزّنة بالعربية ("5 دقائق")؛ بالإنجليزية نعرض "5 min read"
+  const readTimeLabel = (t: string) => (isRtl ? t : `${(t.match(/\d+/) || ["5"])[0]} min read`);
 
   const PAGE = 24;
   const [visible, setVisible] = useState(PAGE);
 
-  const sortedArticles = [...BLOG_ARTICLES].sort((a, b) => b.date.localeCompare(a.date));
+  // القائمة الإنجليزية تعرض المقالات التي لها نسخة إنجليزية فقط
+  const sortedArticles = [...BLOG_ARTICLES]
+    .filter((a) => isRtl || hasEnglish(a))
+    .sort((a, b) => b.date.localeCompare(a.date));
 
   const meta = BLOG_ARTICLES.find(
     (art) => art.slug === articleSlug
@@ -65,13 +72,30 @@ export default function Blog({
     setSeo({
       title: (isRtl ? activeArticle.title : activeArticle.titleEn) + " | " + (isRtl ? "أدوات الوظائف" : "JobTools"),
       description: isRtl ? activeArticle.summary : activeArticle.summaryEn,
-      path: `${isRtl ? "" : "/en"}/blog/${activeArticle.slug}`,
+      path: `${isRtl ? "/ar" : ""}/blog/${activeArticle.slug}`,
       lang: isRtl ? "ar" : "en",
       type: "article",
     });
     setJsonLd(articleJsonLd(activeArticle, SITE.url, "أدوات الوظائف", SITE.url + "/og-image.png", isRtl ? "ar" : "en"));
     return () => setJsonLd(null);
   }, [activeArticle, isRtl]);
+
+  // مقال بلا نسخة إنجليزية فُتح من الرابط الإنجليزي: نعرض رابط النسخة العربية
+  if (!isRtl && meta && !hasEnglish(meta)) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-20 text-center" dir="ltr">
+        <h1 className="text-2xl font-extrabold text-slate-900 mb-3">{meta.titleEn}</h1>
+        <p className="text-slate-600 text-sm mb-6">This article is currently available in Arabic only.</p>
+        <a
+          href={`/ar/blog/${meta.slug}`}
+          onClick={(e) => { e.preventDefault(); onNavigate(`/ar/blog/${meta.slug}`); }}
+          className="inline-block px-5 py-2.5 rounded-xl bg-sky-700 text-white font-bold text-sm"
+        >
+          Read it in Arabic
+        </a>
+      </div>
+    );
+  }
 
   if (meta?.lazy && !activeArticle) {
     return (
@@ -98,7 +122,7 @@ export default function Blog({
     const blocks = parseArticle(content);
     const headings = blocks.filter((b): b is Extract<typeof b, { type: "h2" }> => b.type === "h2");
     const midAd = blocks.length > 6 ? Math.floor(blocks.length / 2) : -1;
-    const related = relatedArticles(BLOG_ARTICLES, activeArticle);
+    const related = relatedArticles(isRtl ? BLOG_ARTICLES : BLOG_ARTICLES.filter(hasEnglish), activeArticle);
 
     return (
       <div
@@ -144,7 +168,7 @@ export default function Blog({
 
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
-              <span>{activeArticle.readTime}</span>
+              <span>{readTimeLabel(activeArticle.readTime)}</span>
             </div>
 
           </div>
@@ -331,7 +355,7 @@ export default function Blog({
                   <Clock className="w-3.5 h-3.5 text-slate-400" />
 
                   <span className="text-slate-500">
-                    {article.readTime}
+                    {readTimeLabel(article.readTime)}
                   </span>
 
                 </div>

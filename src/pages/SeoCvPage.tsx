@@ -24,7 +24,7 @@ export default function SeoCvPage({ slug, isRtl, onNavigate, onLoadCvDataToBuild
       setSeo({
         title: isRtl ? template.metaTitleAr : template.metaTitleEn,
         description: isRtl ? template.metaDescAr : template.metaDescEn,
-        path: `/cv/${template.slug}`,
+        path: `${isRtl ? "/ar" : ""}/cv/${template.slug}`,
         lang: isRtl ? "ar" : "en",
       });
     }

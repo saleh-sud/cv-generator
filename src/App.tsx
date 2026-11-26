@@ -8,6 +8,7 @@ import { CVData, JobDescInput } from "./types";
 import { AlertCircle } from "lucide-react";
 import { NOT_FOUND_META, STATIC_ROUTES } from "./seo/staticRoutes";
 import { setSeo } from "./utils/seo";
+import { counterpart, langOfPath, saveLang, savedLang, setCurrentLang, stripLang, withLang } from "./utils/lang";
 
 // تحميل كسول للصفحات الثقيلة (يقلّص حجم الحزمة الأولى بشكل كبير)
 const CvGeneratorAr = lazy(() => import("./pages/CvGeneratorAr"));
@@ -24,8 +25,22 @@ const normalizePath = (p: string) => {
 };
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState<string>(() => normalizePath(window.location.pathname));
-  const [isRtl, setIsRtl] = useState<boolean>(true);
+  const [currentRoute, setCurrentRoute] = useState<string>(() => {
+    const path = normalizePath(window.location.pathname);
+    // الزائر الذي اختار العربية سابقاً يرجع للعربية عند دخوله رابطاً إنجليزياً
+    if (savedLang() === "ar" && langOfPath(path) === "en") {
+      const ar = counterpart(path);
+      if (ar !== path) {
+        window.history.replaceState({}, "", ar);
+        return ar;
+      }
+    }
+    return path;
+  });
+  // اللغة من الرابط: الإنجليزية أساسية، والعربية تحت /ar
+  const lang = langOfPath(currentRoute);
+  const isRtl = lang === "ar";
+  setCurrentLang(lang);
 
   // popstate (زر الرجوع/الأمام)
   useEffect(() => {
@@ -37,16 +52,13 @@ export default function App() {
   // عند أي تغيير في المسار: اتجاه اللغة + SEO + الرجوع لأعلى الصفحة
   useEffect(() => {
     const path = currentRoute;
-    if (path === "/tools/cv-generator-en" || path.startsWith("/en/")) setIsRtl(false);
-    else if (path === "/tools/cv-generator-ar") setIsRtl(true);
-
     const staticRoute = STATIC_ROUTES.find((r) => r.path === path);
     if (staticRoute) {
       setSeo({
         title: staticRoute.title,
         description: staticRoute.description,
         path,
-        lang: path === "/tools/cv-generator-en" ? "en" : "ar",
+        lang: staticRoute.lang,
       });
     } else {
       // سجل المسارات الكامل (فيه نصوص المقالات) يُحمَّل عند الحاجة فقط حتى يبقى الملف الرئيسي خفيفاً
@@ -64,20 +76,16 @@ export default function App() {
     document.documentElement.setAttribute("lang", isRtl ? "ar" : "en");
   }, [isRtl]);
 
+  // زر اللغة: ينتقل للصفحة نفسها باللغة الأخرى ويتذكر اختيار الزائر
   const handleLanguageToggle = () => {
-    const nextRtl = !isRtl;
-    setIsRtl(nextRtl);
-
-    // Auto toggle page if they are on a language-specific CV builder
-    if (currentRoute === "/tools/cv-generator-ar" && !nextRtl) {
-      handleNavigate("/tools/cv-generator-en");
-    } else if (currentRoute === "/tools/cv-generator-en" && nextRtl) {
-      handleNavigate("/tools/cv-generator-ar");
-    }
+    const next = counterpart(currentRoute);
+    saveLang(langOfPath(next));
+    handleNavigate(next, true);
   };
 
-  const handleNavigate = (route: string) => {
-    const next = normalizePath(route);
+  // الروابط الداخلية تُكتب بلا بادئة لغة ("/blog")، وتُحوَّل هنا تلقائياً للغة الحالية
+  const handleNavigate = (route: string, exact = false) => {
+    const next = normalizePath(exact || route.startsWith("/ar") ? route : withLang(route, lang));
     if (next !== normalizePath(window.location.pathname)) {
       window.history.pushState({}, "", next);
     }
@@ -99,7 +107,7 @@ export default function App() {
 
   // Routing Switch Statement
   const renderActivePage = () => {
-    const path = currentRoute;
+    const path = stripLang(currentRoute);
 
     // 1. Main routes
     if (path === "/" || path === "") {
@@ -119,9 +127,6 @@ export default function App() {
     }
 
     // 2. Dynamic Blog posts
-    if (path.startsWith("/en/blog/")) {
-      return <Blog articleSlug={path.replace("/en/blog/", "")} isRtl={false} onNavigate={handleNavigate} />;
-    }
     if (path.startsWith("/blog/")) {
       const slug = path.replace("/blog/", "");
       return <Blog articleSlug={slug} isRtl={isRtl} onNavigate={handleNavigate} />;
@@ -171,7 +176,7 @@ export default function App() {
     return (
       <div className="max-w-xl mx-auto text-center py-20 px-4 min-h-[450px] flex flex-col items-center justify-center">
         <AlertCircle className="w-16 h-16 text-rose-500 mb-4 animate-bounce" />
-        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-950">الصفحة غير موجودة - 404</h2>
+        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-950">{isRtl ? "الصفحة غير موجودة - 404" : "Page not found - 404"}</h2>
         <p className="text-slate-500 text-sm mt-3 leading-relaxed max-w-sm">
           {isRtl 
             ? "عذراً، الرابط الذي تحاول الوصول إليه غير موجود أو تم نقله لمكان آخر."

@@ -1,4 +1,5 @@
 import React from "react";
+import { L } from "../utils/lang";
 import { Briefcase, FileText, Library, HelpCircle, ShieldCheck } from "lucide-react";
 import { SITE } from "../config/site";
 import { SEO_CV_TEMPLATES, SEO_JOB_TEMPLATES } from "../data/seoTemplates";
@@ -48,7 +49,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               {SEO_CV_TEMPLATES.map((item) => (
                 <li key={item.slug}>
                   <a
-                    href={`/cv/${item.slug}`}
+                    href={L(`/cv/${item.slug}`)}
                     onClick={(e) => handleLinkClick(e, `/cv/${item.slug}`)}
                     className="hover:text-sky-400 transition-colors block text-right md:text-start"
                   >
@@ -69,7 +70,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               {SEO_JOB_TEMPLATES.map((item) => (
                 <li key={item.slug}>
                   <a
-                    href={`/job-description/${item.slug}`}
+                    href={L(`/job-description/${item.slug}`)}
                     onClick={(e) => handleLinkClick(e, `/job-description/${item.slug}`)}
                     className="hover:text-emerald-400 transition-colors block text-right md:text-start"
                   >
@@ -89,7 +90,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="/about"
+                  href={L("/about")}
                   onClick={(e) => handleLinkClick(e, "/about")}
                   className="hover:text-sky-400 transition-colors block text-right md:text-start"
                 >
@@ -98,7 +99,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="/contact"
+                  href={L("/contact")}
                   onClick={(e) => handleLinkClick(e, "/contact")}
                   className="hover:text-sky-400 transition-colors block text-right md:text-start"
                 >
@@ -107,7 +108,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="/privacy-policy"
+                  href={L("/privacy-policy")}
                   onClick={(e) => handleLinkClick(e, "/privacy-policy")}
                   className="hover:text-sky-400 transition-colors block text-right md:text-start"
                 >
@@ -116,7 +117,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="/terms"
+                  href={L("/terms")}
                   onClick={(e) => handleLinkClick(e, "/terms")}
                   className="hover:text-sky-400 transition-colors block text-right md:text-start"
                 >
@@ -137,7 +138,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               )}
               <li className="pt-2 border-t border-slate-800">
                 <a
-                  href="/blog"
+                  href={L("/blog")}
                   onClick={(e) => handleLinkClick(e, "/blog")}
                   className="hover:text-sky-400 text-sky-400 font-semibold transition-colors block text-right md:text-start text-xs"
                 >

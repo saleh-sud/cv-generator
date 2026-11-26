@@ -24,7 +24,7 @@ export default function SeoJobPage({ slug, isRtl, onNavigate, onLoadJobDataToBui
       setSeo({
         title: isRtl ? template.metaTitleAr : template.metaTitleEn,
         description: isRtl ? template.metaDescAr : template.metaDescEn,
-        path: `/job-description/${template.slug}`,
+        path: `${isRtl ? "/ar" : ""}/job-description/${template.slug}`,
         lang: isRtl ? "ar" : "en",
       });
     }

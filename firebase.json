@@ -2,36 +2,178 @@
   "hosting": {
     "target": "cv-generator",
     "public": "dist",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "cleanUrls": true,
     "trailingSlash": false,
     "headers": [
       {
         "source": "**/*.xml",
-        "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }]
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/xml; charset=utf-8"
+          }
+        ]
       },
       {
         "source": "/robots.txt",
-        "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain; charset=utf-8"
+          }
+        ]
       },
       {
         "source": "/assets/**",
-        "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
       },
       {
         "source": "/fonts/**",
-        "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
       },
       {
         "source": "**/*.@(html|xml|txt)",
-        "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
       },
       {
         "source": "**",
         "headers": [
-          { "key": "X-Content-Type-Options", "value": "nosniff" },
-          { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          }
         ]
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/en/blog/:slug",
+        "destination": "/blog/:slug",
+        "type": 301
+      },
+      {
+        "source": "/en",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/blog/international-resume-tips",
+        "destination": "/ar/blog/international-resume-tips",
+        "type": 301
+      },
+      {
+        "source": "/blog/resume-skills-guide",
+        "destination": "/ar/blog/resume-skills-guide",
+        "type": 301
+      },
+      {
+        "source": "/blog/remote-job-success",
+        "destination": "/ar/blog/remote-job-success",
+        "type": 301
+      },
+      {
+        "source": "/blog/best-resume-keywords",
+        "destination": "/ar/blog/best-resume-keywords",
+        "type": 301
+      },
+      {
+        "source": "/blog/professional-resume-summary",
+        "destination": "/ar/blog/professional-resume-summary",
+        "type": 301
+      },
+      {
+        "source": "/blog/best-free-resume-builders",
+        "destination": "/ar/blog/best-free-resume-builders",
+        "type": 301
+      },
+      {
+        "source": "/blog/professional-work-experience",
+        "destination": "/ar/blog/professional-work-experience",
+        "type": 301
+      },
+      {
+        "source": "/blog/first-job-interview-guide",
+        "destination": "/ar/blog/first-job-interview-guide",
+        "type": 301
+      },
+      {
+        "source": "/blog/best-resume-pdf-format",
+        "destination": "/ar/blog/best-resume-pdf-format",
+        "type": 301
+      },
+      {
+        "source": "/blog/professional-linkedin-profile",
+        "destination": "/ar/blog/professional-linkedin-profile",
+        "type": 301
+      },
+      {
+        "source": "/blog/resume-mistakes",
+        "destination": "/ar/blog/resume-mistakes",
+        "type": 301
+      },
+      {
+        "source": "/blog/job-description-keywords",
+        "destination": "/ar/blog/job-description-keywords",
+        "type": 301
+      },
+      {
+        "source": "/blog/cv-vs-resume",
+        "destination": "/ar/blog/cv-vs-resume",
+        "type": 301
+      },
+      {
+        "source": "/blog/top-skills-2026",
+        "destination": "/ar/blog/top-skills-2026",
+        "type": 301
+      },
+      {
+        "source": "/blog/ats-friendly-resume-guide",
+        "destination": "/ar/blog/ats-friendly-resume-guide",
+        "type": 301
+      },
+      {
+        "source": "/blog/online-job-search-tips",
+        "destination": "/ar/blog/online-job-search-tips",
+        "type": 301
+      },
+      {
+        "source": "/blog/resume-without-experience",
+        "destination": "/ar/blog/resume-without-experience",
+        "type": 301
+      },
+      {
+        "source": "/blog/linkedin-keywords",
+        "destination": "/ar/blog/linkedin-keywords",
+        "type": 301
+      },
+      {
+        "source": "/blog/international-company-tips",
+        "destination": "/ar/blog/international-company-tips",
+        "type": 301
       }
     ]
   }

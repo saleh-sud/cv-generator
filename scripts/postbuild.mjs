@@ -26,7 +26,7 @@ await build({
   outfile: tmp,
   logLevel: "silent",
 });
-const { getAllRoutes, NOT_FOUND_META, parseArticle, blocksToHtml, relatedArticles, articleJsonLd, EXTERNAL_SOURCES } = await import(`${pathToFileURL(tmp).href}?v=${Date.now()}`);
+const { getAllRoutes, articlesWithoutEnglish, NOT_FOUND_META, parseArticle, blocksToHtml, relatedArticles, articleJsonLd, EXTERNAL_SOURCES } = await import(`${pathToFileURL(tmp).href}?v=${Date.now()}`);
 fs.rmSync(tmp, { force: true });
 
 // المقالات المولَّدة: نصها الكامل في src/content/articles/<slug>.json
@@ -85,42 +85,67 @@ fs.writeFileSync(
 `
 );
 
-// خلاصة RSS لأحدث المقالات (جوجل وBing يقرآنها لاكتشاف المقالات الجديدة بسرعة)
-const rssItems = routes
-  .filter((r) => r.article && r.articleLang === "ar")
-  .slice(0, 50)
-  .map(
-    (r) => `    <item>
-      <title>${esc(r.article.title)}</title>
+// خلاصات RSS لأحدث المقالات: rss.xml للإنجليزية (اللغة الأساسية) و ar/rss.xml للعربية
+function writeRss(lang) {
+  const en = lang === "en";
+  const items = routes
+    .filter((r) => r.article && r.articleLang === lang)
+    .slice(0, 50)
+    .map(
+      (r) => `    <item>
+      <title>${esc(en ? r.article.titleEn : r.article.title)}</title>
       <link>${esc(urlOf(r.path))}</link>
       <guid isPermaLink="true">${esc(urlOf(r.path))}</guid>
       <pubDate>${new Date(`${r.article.date}T08:00:00Z`).toUTCString()}</pubDate>
-      <category>${esc(r.article.category)}</category>
-      <description>${esc(r.article.summary)}</description>
+      <category>${esc(en ? r.article.categoryEn : r.article.category)}</category>
+      <description>${esc(en ? r.article.summaryEn : r.article.summary)}</description>
     </item>`
-  )
-  .join("\n");
-fs.writeFileSync(
-  path.join(DIST, "rss.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>
+    )
+    .join("\n");
+  const file = en ? "rss.xml" : "ar/rss.xml";
+  fs.mkdirSync(path.dirname(path.join(DIST, file)), { recursive: true });
+  fs.writeFileSync(
+    path.join(DIST, file),
+    `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${esc(config.siteNameAr)} — المدونة</title>
-    <link>${SITE_URL}/blog</link>
-    <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
-    <description>مقالات عن كتابة السيرة الذاتية والمقابلات والبحث عن عمل</description>
-    <language>ar</language>
+    <title>${esc(en ? `${config.siteNameEn} Blog` : `${config.siteNameAr} — المدونة`)}</title>
+    <link>${SITE_URL}${en ? "/blog" : "/ar/blog"}</link>
+    <atom:link href="${SITE_URL}/${file}" rel="self" type="application/rss+xml" />
+    <description>${en ? "Articles on CV writing, job interviews and job hunting" : "مقالات عن كتابة السيرة الذاتية والمقابلات والبحث عن عمل"}</description>
+    <language>${lang}</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-${rssItems}
+${items}
   </channel>
 </rss>
 `
-);
+  );
+}
+writeRss("en");
+writeRss("ar");
+
+// تحويلات 301 (تُكتب في firebase.json عند كل بناء):
+//  - الروابط الإنجليزية القديمة /en/blog/x صارت /blog/x
+//  - المقالات بلا نسخة إنجليزية: /blog/x (كانت عربية) صارت /ar/blog/x
+{
+  const fbFile = path.join(ROOT, "firebase.json");
+  const fb = JSON.parse(fs.readFileSync(fbFile, "utf8"));
+  const redirects = [
+    { source: "/en/blog/:slug", destination: "/blog/:slug", type: 301 },
+    { source: "/en", destination: "/", type: 301 },
+    ...articlesWithoutEnglish().map((slug) => ({ source: `/blog/${slug}`, destination: `/ar/blog/${slug}`, type: 301 })),
+  ];
+  if (JSON.stringify(fb.hosting.redirects || []) !== JSON.stringify(redirects)) {
+    fb.hosting.redirects = redirects;
+    fs.writeFileSync(fbFile, JSON.stringify(fb, null, 2) + "\n");
+    console.log(`↪️  firebase.json: ${redirects.length} redirects updated`);
+  }
+}
 
 if (config.indexNowKey) fs.writeFileSync(path.join(DIST, `${config.indexNowKey}.txt`), config.indexNowKey);
 fs.writeFileSync(
   path.join(DIST, "robots.txt"),
-  `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap: ${SITE_URL}/rss.xml\n`
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap: ${SITE_URL}/rss.xml\nSitemap: ${SITE_URL}/ar/rss.xml\n`
 );
 
 // ---------- 2) prerender ----------
@@ -132,33 +157,34 @@ let template = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 }
 const ldScript = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, "\\u003c")}</script>`;
 const jsonLd = (r) => {
-  if (r.path === "/")
+  if (r.path === "/" || r.path === "/ar")
     return ldScript({
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: config.siteNameAr,
-      alternateName: config.siteNameEn,
-      url: `${SITE_URL}/`,
-      inLanguage: "ar",
+      name: r.lang === "en" ? config.siteNameEn : config.siteNameAr,
+      alternateName: r.lang === "en" ? config.siteNameAr : config.siteNameEn,
+      url: urlOf(r.path),
+      inLanguage: r.lang,
     });
   if (r.article)
     return articleJsonLd(r.article, SITE_URL, config.siteNameAr, SITE_URL + config.ogImage, r.articleLang).map(ldScript).join("");
   return "";
 };
 const allArticles = routes.filter((r) => r.article && r.articleLang === "ar").map((r) => r.article);
+const enArticles = routes.filter((r) => r.article && r.articleLang === "en").map((r) => r.article);
 
 /** محتوى المقال الكامل في HTML الثابت (يراه جوجل فوراً بدون JavaScript). */
 function articleBody(a, lang = "ar") {
   const en = lang === "en";
-  const base = en ? "/en/blog/" : "/blog/";
-  const related = relatedArticles(allArticles, a)
-    .map((x) => `<li><a href="${en && x.contentEn ? base : "/blog/"}${x.slug}">${esc(en ? x.titleEn : x.title)}</a></li>`)
+  const base = en ? "/blog/" : "/ar/blog/";
+  const related = relatedArticles(en ? enArticles : allArticles, a)
+    .map((x) => `<li><a href="${base}${x.slug}">${esc(en ? x.titleEn : x.title)}</a></li>`)
     .join("");
   const sources = EXTERNAL_SOURCES.map(
     (s) => `<li><a href="${s.url}" rel="noopener" target="_blank">${esc(en ? s.labelEn : s.label)}</a></li>`
   ).join("");
   return `<main style="max-width:760px;margin:40px auto;padding:0 16px;font-family:sans-serif;line-height:1.8">
-<nav aria-label="breadcrumb"><a href="/">${esc(en ? config.siteNameEn : config.siteNameAr)}</a> › <a href="/blog">${en ? "Blog" : "المدونة"}</a></nav>
+<nav aria-label="breadcrumb"><a href="${en ? "/" : "/ar"}">${esc(en ? config.siteNameEn : config.siteNameAr)}</a> › <a href="${en ? "/blog" : "/ar/blog"}">${en ? "Blog" : "المدونة"}</a></nav>
 <article><h1>${esc(en ? a.titleEn : a.title)}</h1><p><time datetime="${a.date}">${a.date}</time> · ${esc(en ? a.categoryEn : a.category)}</p>
 <p><strong>${esc(en ? a.summaryEn : a.summary)}</strong></p>
 ${blocksToHtml(parseArticle(en ? a.contentEn : a.content))}
@@ -178,7 +204,7 @@ function render(r, { noindex = false } = {}) {
     <link rel="canonical" href="${esc(url)}" />${r.alternates ? `
     <link rel="alternate" hreflang="ar" href="${urlOf(r.alternates.ar)}" />
     <link rel="alternate" hreflang="en" href="${urlOf(r.alternates.en)}" />
-    <link rel="alternate" hreflang="x-default" href="${urlOf(r.alternates.ar)}" />` : ""}
+    <link rel="alternate" hreflang="x-default" href="${urlOf(r.alternates.en)}" />` : ""}
     <meta property="og:title" content="${esc(r.title)}" />
     <meta property="og:description" content="${esc(r.description)}" />
     <meta property="og:url" content="${esc(url)}" />
@@ -193,8 +219,8 @@ function render(r, { noindex = false } = {}) {
     ${jsonLd(r)}`;
   // روابط الصفحات العامة + أحدث 40 مقالاً فقط (حتى لا يكبر كل ملف HTML مع زيادة المقالات)
   const links = [
-    ...routes.filter((x) => !x.article && !x.noindex),
-    ...routes.filter((x) => x.article && x.articleLang === "ar").slice(0, 40),
+    ...routes.filter((x) => !x.article && !x.noindex && x.lang === r.lang),
+    ...routes.filter((x) => x.article && x.articleLang === r.lang).slice(0, 40),
   ]
     .map((x) => `<li><a href="${x.path}">${esc(x.title)}</a></li>`)
     .join("");
@@ -204,8 +230,8 @@ function render(r, { noindex = false } = {}) {
 
   return template
     .replace(/<!-- seo:start[\s\S]*?<!-- seo:end -->/, head)
-    .replace('<html lang="ar" dir="rtl">', `<html lang="${r.lang}" dir="${r.lang === "en" ? "ltr" : "rtl"}">`)
-    .replace("<!--prerender-->", body + `<p style="max-width:760px;margin:0 auto;padding:0 16px;font-family:sans-serif"><a href="https://techfix-ai.pages.dev/">TechFix AI — حلول وشروحات تقنية</a></p>`);
+    .replace(/<html lang="[a-z]+" dir="[a-z]+">/, `<html lang="${r.lang}" dir="${r.lang === "en" ? "ltr" : "rtl"}">`)
+    .replace("<!--prerender-->", body + `<p style="max-width:760px;margin:0 auto;padding:0 16px;font-family:sans-serif"><a href="https://techfix-ai.pages.dev/">${r.lang === "en" ? "TechFix AI — tech fixes &amp; guides" : "TechFix AI — حلول وشروحات تقنية"}</a></p>`);
 }
 
 let count = 0;
@@ -218,7 +244,7 @@ for (const r of routes) {
 }
 fs.writeFileSync(
   path.join(DIST, "404.html"),
-  render({ ...NOT_FOUND_META, path: "/404", lang: "ar" }, { noindex: true })
+  render({ ...NOT_FOUND_META, path: "/404", lang: "en" }, { noindex: true })
 );
 
 console.log(`✅ sitemap.xml + robots.txt + ${count} prerendered pages + 404.html  (site: ${SITE_URL})`);

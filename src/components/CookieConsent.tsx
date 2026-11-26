@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { L } from "../utils/lang";
 
 const KEY = "cookie-consent-v1";
 
@@ -43,7 +44,7 @@ export default function CookieConsent({ isRtl, onNavigate }: { isRtl: boolean; o
           ? "نستخدم ملفات تعريف الارتباط (الكوكيز) لتحسين تجربتك، ولعرض الإعلانات وقياس الزيارات. "
           : "We use cookies to improve your experience, show ads and measure traffic. "}
         <a
-          href="/privacy-policy"
+          href={L("/privacy-policy")}
           onClick={(e) => {
             e.preventDefault();
             onNavigate("/privacy-policy");
