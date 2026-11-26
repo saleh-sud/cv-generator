@@ -102,7 +102,10 @@ async function chat(messages, maxTokens = 2500) {
         const res = await fetch(ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({ model, messages, max_tokens: maxTokens, response_format: { type: "json_object" } }),
+          body: JSON.stringify({ model, seed: Math.floor(Math.random() * 1e9),
+            // في إعادة المحاولة يتغير الطلب قليلاً، وإلا تعيد الخدمة الرد المخزّن نفسه (المقطوع) كل مرة.
+            messages: attempt > 1 || lastErr ? [...messages, { role: "user", content: `Reply with complete, valid and short JSON only (attempt ${attempt}, ${Date.now()}).` }] : messages,
+            max_tokens: maxTokens + 1000, response_format: { type: "json_object" } }),
         });
         const text = await res.text();
         if (!res.ok) throw new Error(`${model} HTTP ${res.status}: ${text.slice(0, 200)}`);
