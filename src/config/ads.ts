@@ -16,7 +16,7 @@
  * كل المنصات مضبوطة على "بدون إعلانات للبالغين".
  */
 export type AdSlotName = "top" | "mobile" | "content" | "sidebar" | "native";
-export type AdNetworkId = "hilltopads" | "aads" | "adsterra";
+export type AdNetworkId = "hilltopads" | "aads";
 
 export interface AdNetworkConfig {
   label: string;
@@ -25,13 +25,9 @@ export interface AdNetworkConfig {
   global: string;
 }
 
-/** صيغة كود HilltopAds MultiTag/Popunder (نفس الكود الذي تعطيه المنصة، فقط الرابط يتغير). */
+/** صيغة كود HilltopAds MultiTag (نفس الكود الذي تعطيه المنصة، فقط الرابط يتغير). */
 const hilltop = (src: string) =>
   `<script>(function(oast){var d=document,s=d.createElement('script'),l=d.currentScript||d.scripts[d.scripts.length-1];s.settings=oast||{};s.src="${src}";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>`;
-
-/** صيغة كود Adsterra Banner (iframe). */
-const adsterraBanner = (key: string, width: number, height: number) =>
-  `<script>atOptions={'key':'${key}','format':'iframe','height':${height},'width':${width},'params':{}};</script><script src="https://bauval.org/22/${key}"></script>`;
 
 /** A-ADS: وحدة واحدة Adaptive (#2462866) تتكيّف مع حجم كل مكان. */
 const AADS_UNIT = `<iframe data-aa='2462866' src='https://acceptable.a-ads.com/2462866/?size=Adaptive' style='border:0;padding:0;width:100%;height:100%;overflow:hidden;display:block;margin:auto'></iframe>`;
@@ -49,14 +45,8 @@ export const ADS_CONFIG: Record<AdNetworkId, AdNetworkConfig> = {
       sidebar: hilltop("https://prizefamily.com/bTX/V.s/dIGllr0KYnW-cr/Ne_mN9NuqZ/UflpkZP/T_ch2bNGDXkkwDMDjzUytZNPzmY/0RODTZA/yGOtQU"),
       native: "",
     },
-    global: [
-      // JobTools_Popunder (zone 7649009)
-      hilltop("https://enchantingboss.com/c/Dn9d6Jb.2-5/leSGW-Q/9YNJzlYS0XOcT/AuwAOESz0b3fNSjNQ_5BMPDWE/zB"),
-      // JobTools_InPagePush (zone 7649053)
-      hilltop("https://prizefamily.com/bRXAV-s.ddGQle0aYKWVcp/SeJmY9/u/Z/UDl-keP/Tscf2BNaD/kGwINDTXMptfN/zCYX0iOQTFA/1ENkwD"),
-      // JobTools_VideoSlider (zone 7649069)
-      hilltop("https://prizefamily.com/bcXBVqs.dKGylw0tYtWhco/QezmR9CuMZWUzlBkrP/TtcS2nN/Dak/wINPjtkEtDNQzEYf0bOSTeAL3fM/wi"),
-    ].join(""),
+    // Popunder / In-Page Push / Video Slider removed (not allowed next to Google AdSense).
+    global: "",
   },
   aads: {
     label: "A-ADS",
@@ -70,24 +60,7 @@ export const ADS_CONFIG: Record<AdNetworkId, AdNetworkConfig> = {
     },
     global: "",
   },
-  adsterra: {
-    label: "Adsterra",
-    enabled: true,
-    slots: {
-      top: adsterraBanner("232690b7caa661b6b556e5df0e0e7576", 728, 90),
-      mobile: adsterraBanner("9e34b40c29b3703762891206b2662d6c", 320, 50),
-      content: adsterraBanner("706b491c339f9dbe2dbb51513ed96845", 468, 60),
-      sidebar: adsterraBanner("10ae58789b24b4e85e51189adb696f3f", 300, 250),
-      native: `<script async="async" data-cfasync="false" src="https://bauval.org/21/6b6482dae4d0b6ec9af422e5dbe25b1d"></script><div id="container-6b6482dae4d0b6ec9af422e5dbe25b1d"></div>`,
-    },
-    global: [
-      // Social Bar
-      `<script data-cfasync="false" src="https://bauval.org/14/26568786ff1b172f43c0eda6056e81c9"></script>`,
-      // Popunder
-      `<script data-cfasync="false" src="https://abscloud.org/1/07c5c13a3f65e8259a233fa7b13bd0a8"></script>`,
-    ].join(""),
-  },
 };
 
 /** ترتيب ظهور المنصات داخل نفس المكان. */
-export const AD_NETWORK_ORDER: AdNetworkId[] = ["adsterra", "hilltopads", "aads"];
+export const AD_NETWORK_ORDER: AdNetworkId[] = ["hilltopads", "aads"];

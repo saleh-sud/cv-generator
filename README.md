@@ -13,13 +13,13 @@ npm run build    # يبني dist/ + sitemap.xml + robots.txt + صفحات ثاب
 | الملف | الغرض |
 |---|---|
 | `site.config.json` | رابط الموقع النهائي (`siteUrl`)، بريد التواصل (`contactEmail`)، رابط وصل (`waslUrl`) |
-| `src/config/ads.ts` | تشغيل/إيقاف HilltopAds وA-ADS وAdsterra ولصق أكوادها لكل مكان |
+| `src/config/ads.ts` | تشغيل/إيقاف HilltopAds وA-ADS (وإعلانات Google AdSense من index.html) ولصق أكوادها لكل مكان |
 
 > غيّر `siteUrl` قبل البناء: منه يُولَّد الـ sitemap وrobots والـ canonical.
 
 ## الإعلانات
 المكوّن `src/components/AdSpace.tsx` (`top` / `content` / `sidebar`) يعرض أكواد المنصات المفعّلة داخل iframe معزول.
-الأكواد العامة (Popunder / Social Bar) توضع في `global` وتُحمَّل مرة واحدة عبر `GlobalAds`.
+الأكواد العامة توضع في `global` وتُحمَّل مرة واحدة عبر `GlobalAds`.
 بدون كود => لا يظهر شيء في الموقع الحقيقي (ويظهر مربع تنبيه في `npm run dev` فقط).
 
 ## النشر على Firebase Hosting (موقع مستقل لكل مشروع)
