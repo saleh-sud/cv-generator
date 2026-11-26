@@ -28,6 +28,8 @@ const COUNT = countArg > -1 ? Number(process.argv[countArg + 1]) || 1 : 1;
 
 const generated = JSON.parse(fs.readFileSync(OUT, "utf8"));
 const done = new Set(generated.map((a) => a.slug));
+// مقالات تنتظر الموافقة: لا نكتب الموضوع نفسه مرتين
+for (const x of (process.env.SKIP_SLUGS || "").split(",")) if (x) done.add(x);
 // كل الـ slugs الموجودة في الموقع (القديمة + المولّدة + قائمة المواضيع) حتى لا يتكرر أي موضوع
 const allKnownSlugs = () =>
   new Set([...done, ...TOPICS.new.map((t) => t.slug), ...TOPICS.expand, ...[...baseSrc.matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1])]);
@@ -75,6 +77,19 @@ Return JSON: {"topics": [{"slug": "short-english-kebab-case-slug", "keyword": "�
   }
   fs.writeFileSync(TOPICS_FILE, JSON.stringify(TOPICS, null, 2) + "\n");
   console.log(`🧠 أُضيف ${added} موضوع جديد إلى القائمة`);
+}
+
+/** موضوع طلبه صاحب الموقع: نستخرج له رابطاً إنجليزياً غير مكرر. */
+async function customTask(topic) {
+  const res = await chat([
+    { role: "system", content: "You prepare article topics. Return JSON only." },
+    { role: "user", content: `Requested article topic: "${topic}".
+Return JSON: {"slug": "short-english-kebab-case-slug", "keyword": "the same topic written in Arabic"}` },
+  ]);
+  const known = allKnownSlugs();
+  let slug = slugify(res.slug || "") || `article-${Date.now()}`;
+  while (known.has(slug) || done.has(slug)) slug += "-new";
+  return { kind: "custom", slug, keyword: String(res.keyword || "").trim() || topic };
 }
 
 function nextTask() {
@@ -214,7 +229,7 @@ for (let i = 0; i < COUNT; i++) {
   } catch (e) {
     console.warn("تعذّر اقتراح مواضيع جديدة الآن:", String(e.message).slice(0, 120));
   }
-  const task = nextTask();
+  const task = process.env.TOPIC ? await customTask(process.env.TOPIC) : nextTask();
   if (!task) {
     console.log("لا توجد مواضيع متبقية في scripts/article-topics.json — أضف مواضيع جديدة.");
     break;
