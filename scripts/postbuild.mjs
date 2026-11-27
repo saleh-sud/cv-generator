@@ -231,7 +231,7 @@ function render(r, { noindex = false } = {}) {
   return template
     .replace(/<!-- seo:start[\s\S]*?<!-- seo:end -->/, head)
     .replace(/<html lang="[a-z]+" dir="[a-z]+">/, `<html lang="${r.lang}" dir="${r.lang === "en" ? "ltr" : "rtl"}">`)
-    .replace("<!--prerender-->", body + `<p style="max-width:760px;margin:0 auto;padding:0 16px;font-family:sans-serif"><a href="https://techfix-ai.pages.dev/">${r.lang === "en" ? "TechFix AI — tech fixes &amp; guides" : "TechFix AI — حلول وشروحات تقنية"}</a></p>`);
+    .replace("<!--prerender-->", body + `<p style="max-width:760px;margin:0 auto;padding:0 16px;font-family:sans-serif"><a href="https://techfix.wasl-jobs.com/">${r.lang === "en" ? "TechFix AI — tech fixes &amp; guides" : "TechFix AI — حلول وشروحات تقنية"}</a></p>`);
 }
 
 let count = 0;

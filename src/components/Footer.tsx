@@ -147,7 +147,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
               </li>
               <li>
                 <a
-                  href="https://techfix-ai.pages.dev/"
+                  href="https://techfix.wasl-jobs.com/"
                   className="hover:text-sky-400 text-sky-400 font-semibold transition-colors block text-right md:text-start text-xs"
                   rel="noopener"
                 >
@@ -164,7 +164,7 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://wasl-jobs.com/" className="min-w-40 rounded-xl bg-white px-5 py-3 text-center text-sm font-bold text-slate-900 hover:bg-sky-200 transition-colors">{isRtl ? 'وصل للوظائف' : 'WASL Jobs'}</a>
             <a href="https://tools.wasl-jobs.com/" className="min-w-40 rounded-xl bg-white px-5 py-3 text-center text-sm font-bold text-slate-900 hover:bg-sky-200 transition-colors">{isRtl ? 'أدوات وصل المهنية' : 'Career Tools'}</a>
-            <a href="https://techfix-ai.pages.dev/" className="min-w-40 rounded-xl bg-white px-5 py-3 text-center text-sm font-bold text-slate-900 hover:bg-sky-200 transition-colors">{isRtl ? 'TechFix AI' : 'TechFix AI'}</a>
+            <a href="https://techfix.wasl-jobs.com/" className="min-w-40 rounded-xl bg-white px-5 py-3 text-center text-sm font-bold text-slate-900 hover:bg-sky-200 transition-colors">{isRtl ? 'TechFix AI' : 'TechFix AI'}</a>
           </div>
         </nav>
 

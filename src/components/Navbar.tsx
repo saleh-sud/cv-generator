@@ -56,6 +56,9 @@ export default function Navbar({ currentRoute, isRtl, onLanguageToggle, onNaviga
         <div className="flex justify-between items-center h-16">
           {/* Logo Brand Section */}
           <div className="flex items-center gap-3">
+            <a href="https://wasl-jobs.com/" aria-label="WASL" className="hidden sm:block shrink-0 border-e border-slate-200 pe-3">
+              <img src="/wasl-logo.svg" alt="WASL" width="79" height="32" className="h-8 w-auto" />
+            </a>
             <a
               href={L("/")}
               onClick={(e) => { e.preventDefault(); handleItemClick("/"); }}
