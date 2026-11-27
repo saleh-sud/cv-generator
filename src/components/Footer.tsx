@@ -159,6 +159,15 @@ export default function Footer({ isRtl, onNavigate }: FooterProps) {
 
         </div>
 
+        <nav aria-label={isRtl ? 'مواقعنا الأخرى' : 'Our other sites'} className="mt-12 pt-8 border-t border-slate-800 text-center">
+          <p className="mb-3 text-sm font-bold text-white">{isRtl ? 'مواقعنا الأخرى' : 'Our other sites'}</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href="https://wasl-jobs.com/" className="min-w-40 rounded-xl bg-white px-5 py-3 text-center text-sm font-bold text-slate-900 hover:bg-sky-200 transition-colors">{isRtl ? 'وصل للوظائف' : 'WASL Jobs'}</a>
+            <a href="https://tools.wasl-jobs.com/" className="min-w-40 rounded-xl bg-white px-5 py-3 text-center text-sm font-bold text-slate-900 hover:bg-sky-200 transition-colors">{isRtl ? 'أدوات وصل المهنية' : 'Career Tools'}</a>
+            <a href="https://techfix-ai.pages.dev/" className="min-w-40 rounded-xl bg-white px-5 py-3 text-center text-sm font-bold text-slate-900 hover:bg-sky-200 transition-colors">{isRtl ? 'TechFix AI' : 'TechFix AI'}</a>
+          </div>
+        </nav>
+
         {/* Outer banner message */}
         <div className="mt-12 pt-8 border-t border-slate-850 text-center text-xs text-slate-400 leading-relaxed">
           <p>
