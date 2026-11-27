@@ -106,3 +106,6 @@
   --color-brand-blue: #073b72;
   --color-brand-accent: #087fe5;
 }
+
+/* Speed: skip layout of the off-screen footer until it is scrolled to. */
+footer { content-visibility: auto; contain-intrinsic-size: auto 600px; }
