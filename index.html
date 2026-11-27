@@ -9,6 +9,14 @@
     <meta name="332a38836c6a4460cb04b63abe9a9fe6531e805d" content="332a38836c6a4460cb04b63abe9a9fe6531e805d" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     <!-- Google AdSense (shows Google's consent message in Europe; ads start after the site is approved) -->
+    <script>
+      // The site moved to cv.wasl-jobs.com. Visitors with a saved draft stay, because drafts live in this address's browser storage.
+      (function () {
+        if (!/^jobtools-cv-generator\.(web\.app|firebaseapp\.com)$/.test(location.hostname)) return;
+        try { if (['arabic_cv_draft', 'english_cv_draft', 'jd_generator_draft'].some(function (k) { return localStorage.getItem(k); })) return; } catch (e) {}
+        location.replace('https://cv.wasl-jobs.com' + location.pathname + location.search + location.hash);
+      })();
+    </script>
     <meta name="google-adsense-account" content="ca-pub-8561326733016762" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8561326733016762" crossorigin="anonymous"></script>
     <meta name="theme-color" content="#1d4ed8" />
