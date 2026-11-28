@@ -2,6 +2,7 @@ import { Suspense, lazy, useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import GlobalAds from "./components/GlobalAds";
+import { SiteAd } from "./components/AdSpace";
 import CookieConsent from "./components/CookieConsent";
 import Home from "./pages/Home";
 import { CVData, JobDescInput } from "./types";
@@ -209,6 +210,7 @@ export default function App() {
           {renderActivePage()}
         </Suspense>
       </main>
+      <SiteAd />
       <GlobalAds />
       <CookieConsent isRtl={isRtl} onNavigate={handleNavigate} />
 
