@@ -29,8 +29,8 @@ export interface AdNetworkConfig {
 const hilltop = (src: string) =>
   `<script>(function(oast){var d=document,s=d.createElement('script'),l=d.currentScript||d.scripts[d.scripts.length-1];s.settings=oast||{};s.src="${src}";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>`;
 
-/** A-ADS: وحدة واحدة Adaptive (#2462866) تتكيّف مع حجم كل مكان. */
-const AADS_UNIT = `<iframe data-aa='2462866' src='https://acceptable.a-ads.com/2462866/?size=Adaptive' style='border:0;padding:0;width:100%;height:100%;overflow:hidden;display:block;margin:auto'></iframe>`;
+/** A-ADS: وحدة واحدة Adaptive (#2463568) تتكيّف مع حجم كل مكان. */
+const AADS_UNIT = `<iframe data-aa='2463568' src='https://acceptable.a-ads.com/2463568/?size=Adaptive' style='border:0;padding:0;width:100%;height:100%;overflow:hidden;display:block;margin:auto'></iframe>`;
 
 export const ADS_CONFIG: Record<AdNetworkId, AdNetworkConfig> = {
   hilltopads: {
