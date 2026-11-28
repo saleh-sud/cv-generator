@@ -109,3 +109,6 @@
 
 /* Speed: skip layout of the off-screen footer until it is scrolled to. */
 footer { content-visibility: auto; contain-intrinsic-size: auto 600px; }
+
+.aads-static { max-width: 970px; margin: 0 auto 16px; padding: 0 16px; text-align: center; }
+@media print { .aads-static { display: none; } }
